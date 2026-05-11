@@ -1,0 +1,94 @@
+/* ============================================
+   ANIMATIONS — Keyframes & CSS Transitions
+   ============================================ */
+
+/* --- Loader --- */
+@keyframes loader-bar {
+  0%   { width: 0%; }
+  30%  { width: 35%; }
+  60%  { width: 65%; }
+  85%  { width: 88%; }
+  100% { width: 100%; }
+}
+@keyframes logo-reveal {
+  from { opacity: 0; transform: scale(0.8) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes curtain-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+
+/* --- Pulse dot (availability badge) --- */
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.8); opacity: 0; }
+}
+
+/* --- Float (3D object supplemental) --- */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+/* --- Orbit rings --- */
+@keyframes orbit-cw  { from { transform: rotate(0deg);   } to { transform: rotate(360deg);  } }
+@keyframes orbit-ccw { from { transform: rotate(0deg);   } to { transform: rotate(-360deg); } }
+@keyframes counter-rotate-cw  { from { transform: translate(-50%,-50%) rotate(0deg);   } to { transform: translate(-50%,-50%) rotate(-360deg);  } }
+@keyframes counter-rotate-ccw { from { transform: translate(-50%,-50%) rotate(0deg);   } to { transform: translate(-50%,-50%) rotate(360deg);   } }
+
+/* --- Scroll indicator --- */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50%       { transform: translateY(8px); opacity: 0.4; }
+}
+
+/* --- Shine on card --- */
+@keyframes card-shine {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* --- Process line draw (JS-controlled via GSAP but CSS fallback) --- */
+@keyframes line-draw {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+/* --- Glow pulse --- */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+  50%       { box-shadow: 0 0 45px var(--accent-glow-strong); }
+}
+
+/* --- Fade Up (GSAP-managed, defined here as fallback) --- */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Theme toggle icon spin --- */
+@keyframes icon-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(180deg); }
+}
+
+/* --- Badge shimmer --- */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}

@@ -1,0 +1,95 @@
+/* ============================================
+   DESIGN TOKENS — Dark Mode Default
+   ============================================ */
+:root {
+  /* --- Backgrounds --- */
+  --bg-primary:    #09090C;
+  --bg-secondary:  #111116;
+  --bg-elevated:   #18181E;
+  --surface:       #1C1C23;
+  --surface-glass: rgba(255,255,255,0.04);
+  --surface-glass-hover: rgba(255,255,255,0.07);
+
+  /* --- Borders --- */
+  --border:        rgba(255,255,255,0.07);
+  --border-accent: rgba(0,212,200,0.35);
+  --border-hover:  rgba(255,255,255,0.14);
+
+  /* --- Glass Highlights --- */
+  --glass-border-top: rgba(255, 255, 255, 0.12);
+  --glass-border-left: rgba(255, 255, 255, 0.08);
+  --glass-inner-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* --- Text --- */
+  --text-primary:   #EDEDF0;
+  --text-secondary: #8E8E9E;
+  --text-muted:     #5A5A6A;
+
+  /* --- Accent — Electric Teal --- */
+  --accent:        #00D4C8;
+  --accent-hover:  #00F0E2;
+  --accent-dim:    rgba(0,212,200,0.10);
+  --accent-glow:   rgba(0,212,200,0.22);
+  --accent-glow-strong: rgba(0,212,200,0.45);
+
+  /* --- Semantic --- */
+  --available-color: #22C55E;
+
+  /* --- Spacing Scale --- */
+  --s-1:  0.25rem;
+  --s-2:  0.5rem;
+  --s-3:  0.75rem;
+  --s-4:  1rem;
+  --s-5:  1.25rem;
+  --s-6:  1.5rem;
+  --s-8:  2rem;
+  --s-10: 2.5rem;
+  --s-12: 3rem;
+  --s-16: 4rem;
+  --s-20: 5rem;
+  --s-24: 6rem;
+  --s-32: 8rem;
+
+  /* --- Border Radius --- */
+  --r-sm:   6px;
+  --r-md:   12px;
+  --r-lg:   20px;
+  --r-xl:   28px;
+  --r-full: 9999px;
+
+  /* --- Shadows --- */
+  --shadow-sm:     0 2px 8px rgba(0,0,0,0.35);
+  --shadow-md:     0 8px 32px rgba(0,0,0,0.45);
+  --shadow-lg:     0 24px 64px rgba(0,0,0,0.55);
+  --shadow-accent: 0 0 48px rgba(0,212,200,0.12);
+
+  /* --- Thumbs --- */
+  --thumb-1: url('../Photos/RideO/admin 2.png');
+  --thumb-2: url('../Photos/Student PortaL/Admin_Function( Manage_Exam ).png');
+  --thumb-3: url('../Photos/ApnaDhaba/Picture1.png');
+  --thumb-4: url('../Photos/Logic Circuit Simulator/2.png');
+  --thumb-5: url('../Photos/Kidswear e-commerce/user 2.png');
+
+  /* --- Typography --- */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* --- Transitions --- */
+  --t-fast:   150ms ease;
+  --t-base:   280ms ease;
+  --t-slow:   500ms ease;
+  --t-spring: 380ms cubic-bezier(0.34,1.56,0.64,1);
+
+  /* --- Z-Index Layers --- */
+  --z-base:    1;
+  --z-card:    10;
+  --z-nav:     100;
+  --z-modal:   200;
+  --z-loader:  300;
+  --z-cursor:  400;
+
+  /* --- Container --- */
+  --container-max: 1240px;
+  --container-pad: var(--s-6);
+}

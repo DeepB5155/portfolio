@@ -1,0 +1,170 @@
+/* ============================================
+   MODAL (CASE STUDY)
+   ============================================ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 350; /* Between loader (300) and cursor (400) */
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  padding: var(--s-4);
+}
+
+.modal-backdrop.is-active {
+  pointer-events: auto;
+  visibility: visible;
+  /* GSAP will handle opacity */
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: var(--s-8) var(--s-6);
+  position: relative;
+  /* Reset GSAP transform starting state */
+  transform: scale(0.95);
+  opacity: 0;
+  /* Custom scrollbar for modal */
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+.modal-content::-webkit-scrollbar { width: 6px; }
+.modal-content::-webkit-scrollbar-track { background: transparent; }
+.modal-content::-webkit-scrollbar-thumb { background-color: var(--accent); border-radius: 10px; }
+
+.modal-close {
+  position: absolute;
+  top: var(--s-4);
+  right: var(--s-4);
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--t-fast);
+  z-index: 10;
+}
+
+.modal-close:hover {
+  background: var(--surface-glass-hover);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+  transform: rotate(90deg);
+}
+
+/* Modal Body Typography & Layout */
+.modal-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-2);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--s-4);
+  line-height: 1.1;
+}
+
+.modal-overview {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--s-8);
+  max-width: 650px;
+}
+
+/* Tech Stack */
+.modal-section-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: var(--s-4);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--s-2);
+}
+
+.modal-tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-bottom: var(--s-8);
+}
+
+.modal-tech-list .tag {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+/* Features Grid */
+.modal-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+  margin-bottom: var(--s-8);
+}
+
+@media (min-width: 600px) {
+  .modal-features {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.feature-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+}
+
+.feature-title {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: var(--s-2);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.feature-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.feature-desc {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Actions */
+.modal-actions {
+  display: flex;
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}

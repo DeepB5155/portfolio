@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Deep Patel | Full-Stack Developer | .NET 8 &amp; React Native Specialist</title>
+  <meta name="description" content="Professional full-stack developer building production-ready web and mobile apps. Specialized in .NET 8, React, and React Native. 10+ projects delivered."/>
+  <meta property="og:title" content="Deep Patel | Custom Software Development"/>
+  <meta property="og:description" content="Launch your web or mobile product with a specialized .NET and React developer. Production-ready software delivered in 2–3 weeks."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://deeppatel.dev"/>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2300D4C8'/%3E%3Ctext x='50' y='65' font-family='Arial' font-size='40' font-weight='bold' fill='white' text-anchor='middle'%3EDP%3C/text%3E%3C/svg%3E"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="css/reset.css"/>
+  <link rel="stylesheet" href="css/tokens.css"/>
+  <link rel="stylesheet" href="css/typography.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/layout.css"/>
+  <link rel="stylesheet" href="css/theme.css"/>
+  <link rel="stylesheet" href="css/responsive.css"/>
+  <link rel="stylesheet" href="css/modal.css"/>
+  
+  <script defer src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- Noise Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Loading Screen -->
+  <div id="loader">
+    <svg class="loader-logo" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 100 100">
+      <rect width="100" height="100" rx="20" fill="none" stroke="var(--accent)" stroke-width="4"/>
+      <text x="50" y="65" font-family="var(--font-display)" font-size="40" font-weight="700" fill="var(--text-primary)" text-anchor="middle">DB</text>
+    </svg>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar-fill"></div>
+    </div>
+    <div class="loader-label">Initializing</div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav">
+    <div class="container nav-inner">
+      <a href="#hero" class="nav-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 100 100">
+          <rect width="100" height="100" rx="12" fill="none" stroke="var(--text-primary)" stroke-width="4"/>
+          <text x="50" y="64" font-family="var(--font-display)" font-size="36" font-weight="700" fill="var(--text-primary)" text-anchor="middle">DB</text>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#work" class="nav-link">Work</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="https://github.com/deepb5155" target="_blank" rel="noopener noreferrer" class="nav-link" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-top: -2px;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </a>
+      </div>
+      <div class="nav-actions">
+        <button id="theme-toggle" aria-label="Toggle theme"></button>
+        <a href="#contact" class="btn btn-primary btn-sm">Hire Me</a>
+        <button id="nav-hamburger" class="nav-hamburger">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu">
+    <a href="#about" class="m-link">About</a>
+    <a href="#services" class="m-link">Services</a>
+    <a href="#work" class="m-link">Work</a>
+    <a href="#contact" class="m-link">Contact</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <div class="hero-anim">
+          <div class="badge-available">
+            <span class="dot"></span> Available for New Projects
+          </div>
+        </div>
+        <h1 class="display-xl hero-anim">
+          I Build Software That<br/><span class="text-gradient">Powers Your Business.</span>
+        </h1>
+        <p class="body-lg text-secondary hero-anim" style="max-width: 520px;">
+          Full-stack .NET and React specialist delivering production-ready software in 2–3 weeks. I turn complex ideas into functional, high-performance products.
+        </p>
+        <div class="hero-ctas hero-anim">
+          <a href="#contact" class="btn btn-primary btn-lg">Start Your Project</a>
+          <a href="#work" class="btn btn-ghost btn-lg">View Case Studies</a>
+        </div>
+        <div class="hero-stats hero-anim">
+          <div class="stat-item"><span class="stat-val">10+</span><span class="stat-label">Projects Shipped</span></div>
+          <div class="stat-item"><span class="stat-val">2+ Yrs</span><span class="stat-label">Engineering Exp</span></div>
+          <div class="stat-item"><span class="stat-val">2–3 Wks</span><span class="stat-label">Avg. Delivery</span></div>
+        </div>
+      </div>
+      <div class="hero-3d hero-anim">
+        <div class="hero-glow"></div>
+        <canvas id="three-canvas"></canvas>
+      </div>
+    </div>
+    <div class="scroll-indicator hero-anim">
+      <span>SCROLL</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="container section-inner">
+      <div class="section-label reveal"><span>01</span> / About</div>
+      <div class="about-grid">
+        <div class="reveal">
+          <img src="Photos/Deep Face.jpg" alt="Deep Patel — Full-Stack Developer" class="about-image"/>
+          <h2 class="h2" style="margin-bottom: var(--s-6);">Technical Expertise with a Product Mindset</h2>
+          <p class="about-bio text-secondary">
+            I started building software in college because I wanted to solve real problems, not just pass exams. Over 2 years I've shipped 10+ projects — from food delivery platforms and ride-sharing ecosystems to enterprise management systems and e-commerce stores. I enjoy working across the full stack, and I take pride in delivering code that is clean, maintainable, and something clients are genuinely proud to show their customers.
+          </p>
+        </div>
+        <div class="about-info-cards reveal">
+          <div class="glass-card info-card accent-top">
+            <svg class="info-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <h4 class="h4">Approach</h4>
+            <p class="body-sm text-secondary" style="margin-top: 8px;">I focus on fast iteration and clean code, ensuring your product is ready for users from day one.</p>
+          </div>
+          <div class="glass-card info-card">
+            <svg class="info-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+            <h4 class="h4">Specialization</h4>
+            <p class="body-sm text-secondary" style="margin-top: 8px;">Expert in .NET 8 backends, React web platforms, and cross-platform React Native mobile apps.</p>
+          </div>
+          <div class="glass-card info-card">
+            <svg class="info-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <h4 class="h4">Reliability</h4>
+            <p class="body-sm text-secondary" style="margin-top: 8px;">Dedicated to hitting deadlines and maintaining clear communication throughout the entire build.</p>
+          </div>
+          <div class="glass-card info-card">
+            <svg class="info-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+            <h4 class="h4">Value</h4>
+            <p class="body-sm text-secondary" style="margin-top: 8px;">Agency-level engineering quality with the direct, responsive communication of a dedicated developer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <div class="container section-inner">
+      <div class="section-label reveal"><span>02</span> / Services</div>
+      <h2 class="h2 reveal" style="margin-bottom: var(--s-12);">Professional Software Services</h2>
+      
+      <div class="services-grid">
+        <div class="glass-card service-card">
+          <div class="badge-featured">Most Requested</div>
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg></div>
+          <h3 class="h3">Web Application Development</h3>
+          <p>High-speed web platforms tailored to your specific business logic. Built with .NET 8 and React for a fast, reliable user experience.</p>
+        </div>
+        <div class="glass-card service-card">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></div>
+          <h3 class="h3">Mobile App Development</h3>
+          <p>Cross-platform iOS and Android apps built with React Native. One codebase, two platforms — native performance that saves you time and money.</p>
+        </div>
+        <div class="glass-card service-card">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg></div>
+          <h3 class="h3">Backend APIs & Microservices</h3>
+          <p>Secure, high-performance API development and database management using .NET 8. The reliable engine that keeps your data safe and your app running.</p>
+        </div>
+        <div class="glass-card service-card">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg></div>
+          <h3 class="h3">Enterprise Dashboards</h3>
+          <p>Internal tools and data visualization dashboards built for clarity. Streamline your team's workflow with interfaces designed for speed and ease of use.</p>
+        </div>
+        <div class="glass-card service-card">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg></div>
+          <h3 class="h3">E-commerce Platforms</h3>
+          <p>Custom online stores with product catalogs, secure checkouts, and payment integration. A platform you own entirely — no recurring subscription fees.</p>
+        </div>
+        <div class="glass-card service-card">
+          <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
+          <h3 class="h3">MVP Development</h3>
+          <p>Rapid prototyping to get your product in front of users in weeks, not months. The fastest way to launch your startup with a solid technical foundation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section id="process">
+    <div class="container section-inner">
+      <div class="section-label reveal"><span>03</span> / Process</div>
+      <h2 class="h2 reveal">My 4-Step Delivery Framework</h2>
+      
+      <div class="process-track">
+        <div class="process-line"><div class="process-line-fill"></div></div>
+        
+        <div class="process-step" data-process-id="step-1">
+          <div class="step-node">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </div>
+          <div>
+            <div class="step-number">01</div>
+            <h3 class="step-title">Discovery & Planning</h3>
+            <p class="step-desc">We define your goals and technical requirements to ensure a clear roadmap and no surprises later.</p>
+          </div>
+        </div>
+        
+        <div class="process-step" data-process-id="step-2">
+          <div class="step-node">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          </div>
+          <div>
+            <div class="step-number">02</div>
+            <h3 class="step-title">Architecture & Design</h3>
+            <p class="step-desc">I select the best tech stack and design the database and system structure for long-term reliability.</p>
+          </div>
+        </div>
+        
+        <div class="process-step" data-process-id="step-3">
+          <div class="step-node">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+          </div>
+          <div>
+            <div class="step-number">03</div>
+            <h3 class="step-title">Development & Integration</h3>
+            <p class="step-desc">Iterative building with regular updates so you see real progress every week and can provide feedback in real-time.</p>
+          </div>
+        </div>
+        
+        <div class="process-step" data-process-id="step-4">
+          <div class="step-node">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+          </div>
+          <div>
+            <div class="step-number">04</div>
+            <h3 class="step-title">Launch & Optimization</h3>
+            <p class="step-desc">Final testing, deployment to production, and a smooth handoff with documentation and post-launch support.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work Section -->
+  <section id="work">
+    <div class="container section-inner">
+      <div class="section-label reveal"><span>04</span> / Selected Work</div>
+      <h2 class="h2 reveal">Featured projects.</h2>
+      
+      <div class="work-grid">
+        <a href="https://github.com/DeepB5155/RideO-FullStack-Mobility-Platform" target="_blank" rel="noopener noreferrer" class="project-card" data-project-id="rideo">
+          <div class="project-thumb">
+            <div class="project-thumb-bg thumb-1"></div>
+            <div class="thumb-label">RideO</div>
+            <div class="project-overlay">
+              <span class="btn btn-ghost">View Case Study</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">Full-Stack Ride-Sharing</span>
+              <span class="tag tag-neutral">.NET 8</span>
+              <span class="tag tag-neutral">React Native</span>
+              <span class="tag tag-neutral">PostgreSQL</span>
+            </div>
+            <h3 class="project-title">RideO</h3>
+            <p class="project-desc">High-performance, cross-platform ride-sharing ecosystem built with .NET 8 Microservices, React Native, and dual-database architecture. Features unique Antigravity Routing Engine for frictionless urban transit.</p>
+          </div>
+        </a>
+        
+        <a href="https://github.com/DeepB5155/StudentPortal-Pro" target="_blank" rel="noopener noreferrer" class="project-card" data-project-id="student-portal">
+          <div class="project-thumb">
+            <div class="project-thumb-bg thumb-2"></div>
+            <div class="thumb-label">Student Portal</div>
+            <div class="project-overlay">
+              <span class="btn btn-ghost">View Case Study</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">Enterprise SaaS</span>
+              <span class="tag tag-neutral">ASP.NET Core 8</span>
+              <span class="tag tag-neutral">React / TypeScript</span>
+            </div>
+            <h3 class="project-title">Student Portal</h3>
+            <p class="project-desc">A secure enterprise platform featuring multi-role dashboards, OAuth2 authentication, and automated academic workflows for Admin, Faculty, and Student users.</p>
+          </div>
+        </a>
+
+        <a href="https://github.com/DeepB5155/ApnaDhaba-Food-Ordering-System" target="_blank" rel="noopener noreferrer" class="project-card" data-project-id="apnadhaba">
+          <div class="project-thumb">
+            <div class="project-thumb-bg thumb-3"></div>
+            <div class="thumb-label">ApnaDhaba</div>
+            <div class="project-overlay">
+              <span class="btn btn-ghost">View Case Study</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">Mobile App + Backend</span>
+              <span class="tag tag-neutral">React Native</span>
+              <span class="tag tag-neutral">.NET APIs</span>
+            </div>
+            <h3 class="project-title">ApnaDhaba</h3>
+            <p class="project-desc">Food ordering app specially designed for franchise businesses. Features online ordering, QR code scanning for in-shop menu selection, and seamless payment integration.</p>
+          </div>
+        </a>
+
+        <a href="https://github.com/DeepB5155/Logic-Circuit-Simulator" target="_blank" rel="noopener noreferrer" class="project-card" data-project-id="logic-sim">
+          <div class="project-thumb">
+            <div class="project-thumb-bg thumb-4"></div>
+            <div class="thumb-label">Logic Circuit Simulator</div>
+            <div class="project-overlay">
+              <span class="btn btn-ghost">View Case Study</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">Interactive Web Tool</span>
+              <span class="tag tag-neutral">React</span>
+              <span class="tag tag-neutral">Canvas/WebGL</span>
+            </div>
+            <h3 class="project-title">Logic Circuit Simulator</h3>
+            <p class="project-desc">Real-time, interactive Logic Circuit Simulator. Design, debug, and visualize digital logic systems with drag-and-drop interface. Supports basic gates, flip-flops, and custom I/O.</p>
+          </div>
+        </a>
+
+        <a href="https://github.com/DeepB5155/kidswear_ecommerce-platform" target="_blank" rel="noopener noreferrer" class="project-card" data-project-id="kidswear">
+          <div class="project-thumb">
+            <div class="project-thumb-bg thumb-5"></div>
+            <div class="thumb-label">Kidswear E-commerce</div>
+            <div class="project-overlay">
+              <span class="btn btn-ghost">View Case Study</span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-tags">
+              <span class="tag">E-commerce Platform</span>
+              <span class="tag tag-neutral">React</span>
+              <span class="tag tag-neutral">Multi-market</span>
+            </div>
+            <h3 class="project-title">Kidswear E-commerce Platform</h3>
+            <p class="project-desc">E-commerce platform specially designed for kids' clothing. Serves India and US markets with full product catalog, shopping cart, payments, and multi-market support.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack Section -->
+  <section id="stack">
+    <div class="container section-inner">
+      <div class="section-label reveal" style="justify-content: center; margin-bottom: var(--s-8);"><span>05</span> / Capabilities</div>
+      <h2 class="h2 reveal" style="text-align: center;">Technical Stack</h2>
+      
+      <div class="orbit-container reveal">
+        <div class="orbit-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+          <div class="orbit-center-text" style="margin-top: 8px;">Stack</div>
+        </div>
+        
+        <!-- Inner Ring -->
+        <div class="orbit-ring orbit-ring-1">
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>React</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>React Native</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Node.js</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>.NET 8</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>ASP.NET</div>
+        </div>
+
+        <!-- Outer Ring -->
+        <div class="orbit-ring orbit-ring-2">
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>PostgreSQL</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>MongoDB</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>Microservices</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>REST APIs</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>MFA Security</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Payments</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>GIS Integration</div>
+          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Real-time</div>
+        </div>
+      </div>
+
+      <!-- Mobile Fallback Grid -->
+      <div class="stack-mobile-grid reveal">
+        <div class="stack-mobile-item">React</div>
+        <div class="stack-mobile-item">React Native</div>
+        <div class="stack-mobile-item">.NET 8</div>
+        <div class="stack-mobile-item">Node.js</div>
+        <div class="stack-mobile-item">PostgreSQL</div>
+        <div class="stack-mobile-item">MongoDB</div>
+        <div class="stack-mobile-item">Microservices</div>
+        <div class="stack-mobile-item">MFA Security</div>
+        <div class="stack-mobile-item">Real-time</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="cta">
+    <div class="container section-inner">
+      <div class="cta-inner">
+        <h2 class="display-lg">Ready to Turn Your Idea into Software?</h2>
+        <p class="cta-sub">I am currently accepting new freelance projects. Let's talk about your requirements and get your product moving.</p>
+        <a href="#contact" class="btn btn-primary btn-lg">Book a Discovery Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container section-inner">
+      <div class="section-label reveal"><span>06</span> / Contact</div>
+      
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h2 class="h2">Let's Talk Business</h2>
+          <p class="text-secondary">Tell me about your project and I'll get back to you within 24 hours with a plan and a quote.</p>
+          
+          <div class="contact-socials">
+            <a href="mailto:deepb5155@gmail.com" class="social-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              deepb5155@gmail.com
+            </a>
+            <a href="https://wa.me/917096769375" target="_blank" rel="noopener noreferrer" class="social-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              WhatsApp (Fast Reply)
+            </a>
+            <a href="https://www.linkedin.com/in/deep-patel-22a1b1300/" target="_blank" rel="noopener noreferrer" class="social-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn Profile
+            </a>
+            <a href="https://www.upwork.com/freelancers/~015560bb071f2642ee" target="_blank" rel="noopener noreferrer" class="social-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Upwork Profile
+            </a>
+            <a href="https://github.com/DeepB5155" target="_blank" rel="noopener noreferrer" class="social-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+          <a href="https://cal.id/patel-deep" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="margin-top: var(--s-4); align-self: flex-start;">📅 Book a Free Discovery Call</a>
+        </div>
+        
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <input type="hidden" name="_subject" value="New Inquiry from Portfolio Website!">
+          <input type="hidden" name="_template" value="box">
+          <div class="form-group">
+            <input type="text" id="name" name="name" class="form-input" placeholder=" " required />
+            <label for="name" class="form-label">Name</label>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="email" class="form-input" placeholder=" " required />
+            <label for="email" class="form-label">Email</label>
+          </div>
+          <div class="form-group">
+            <select id="project" name="project_type" class="form-select">
+              <option value="web">Web Application</option>
+              <option value="mobile">Mobile Application</option>
+              <option value="backend">Backend / API</option>
+              <option value="other">Other</option>
+            </select>
+            <label for="project" class="form-label" style="top: 0.35rem; font-size: 0.72rem; color: var(--accent);">Project Type</label>
+          </div>
+          <div class="form-group">
+            <textarea id="message" name="message" class="form-textarea" placeholder=" " required></textarea>
+            <label for="message" class="form-label">Message details...</label>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-copy">Building the software that moves your business forward.</div>
+      <div class="footer-links">
+        <a href="https://github.com/DeepB5155" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
+        <a href="https://www.linkedin.com/in/deep-patel-22a1b1300/" target="_blank" rel="noopener noreferrer" class="footer-link">LinkedIn</a>
+        <a href="#about" class="footer-link">About</a>
+        <a href="#work" class="footer-link">Work</a>
+        <a href="#contact" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Case Study Modal -->
+  <div id="project-modal" class="modal-backdrop">
+    <div class="modal-content glass-card">
+      <button class="modal-close" aria-label="Close modal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
