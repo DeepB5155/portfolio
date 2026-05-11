@@ -2,7 +2,7 @@
 
 > Personal portfolio website built to showcase my freelance work and attract clients on Upwork, Fiverr, and direct channels.
 
-**Live Site:** [deep-patel.netlify.app](https://deep-patel.netlify.app) &nbsp;|&nbsp; **Upwork:** [View Profile](https://www.upwork.com/freelancers/~015560bb071f2642ee) &nbsp;|&nbsp; **LinkedIn:** [deep-patel-22a1b1300](https://www.linkedin.com/in/deep-patel-22a1b1300/)
+**Live Site:** [deep-patel-53.netlify.app](https://deep-patel-53.netlify.app) &nbsp;|&nbsp; **Upwork:** [View Profile](https://www.upwork.com/freelancers/~015560bb071f2642ee) &nbsp;|&nbsp; **LinkedIn:** [deep-patel-22a1b1300](https://www.linkedin.com/in/deep-patel-22a1b1300/)
 
 ---
 
