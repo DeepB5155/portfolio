@@ -39,7 +39,7 @@ export function initContactForm() {
     btn.innerText = 'Sending...';
     btn.disabled = true;
 
-    // FormSubmit requires the /ajax/ URL for fetch requests
+    // Formspree endpoint
     const url = 'https://formspree.io/f/xojrkbjg';
     const formData = new FormData(form);
 

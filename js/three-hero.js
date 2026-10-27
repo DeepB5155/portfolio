@@ -61,7 +61,7 @@ export function initThreeHero() {
   scene.add(new THREE.Mesh(glowGeo, glowMat));
 
   // Particles
-  const pCount = 2000;
+  const pCount = window.innerWidth < 768 ? 600 : 2000;
   const pPos = new Float32Array(pCount * 3);
   for (let i = 0; i < pCount * 3; i++) pPos[i] = (Math.random() - 0.5) * 18;
   const pGeo = new THREE.BufferGeometry();
@@ -80,8 +80,12 @@ export function initThreeHero() {
   let cx = 0, cy = 0;
   const clock = new THREE.Clock();
 
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let heroVisible = true;
+  let rafId = 0;
+
   function animate() {
-    requestAnimationFrame(animate);
+    rafId = 0;
     const t = clock.getElapsedTime();
     cx += (tx - cx) * 0.04;
     cy += (ty - cy) * 0.04;
@@ -98,7 +102,26 @@ export function initThreeHero() {
     light3.intensity = 2.5 + Math.sin(t * 1.2) * 0.8;
 
     renderer.render(scene, camera);
+    schedule();
   }
+
+  function schedule() {
+    if (reduceMotion || rafId || !heroVisible || document.hidden || gameOpen) return;
+    rafId = requestAnimationFrame(animate);
+  }
+
+  let gameOpen = false;
+  window.addEventListener('game-state', (e) => {
+    gameOpen = !!e.detail;
+    if (!gameOpen) schedule();
+  });
+
+  new IntersectionObserver(([entry]) => {
+    heroVisible = entry.isIntersecting;
+    schedule();
+  }).observe(canvas);
+  document.addEventListener('visibilitychange', schedule);
+
   animate();
 
   // Resize

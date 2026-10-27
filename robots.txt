@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://deep-patel-53.netlify.app/sitemap.xml

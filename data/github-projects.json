@@ -1,0 +1,180 @@
+{
+  "owner": "DeepB5155",
+  "projects": [
+    {
+      "id": "RideO-FullStack-Mobility-Platform",
+      "title": "RideO FullStack Mobility Platform",
+      "description": "A high-performance, cross-platform ride-sharing ecosystem built with .NET 8 Microservices, React Native, and a dual-database architecture (PostgreSQL & MongoDB). Featuring the unique Antigravity Routing Engine for frictionless urban transit.",
+      "url": "https://github.com/DeepB5155/RideO-FullStack-Mobility-Platform",
+      "live": null,
+      "languages": [
+        "TypeScript",
+        "C#",
+        "JavaScript",
+        "CSS",
+        "Kotlin"
+      ],
+      "langBytes": {
+        "TypeScript": 767828,
+        "C#": 401702,
+        "JavaScript": 159437,
+        "CSS": 28678,
+        "Kotlin": 3244
+      },
+      "size": 1366823,
+      "createdAt": "2026-03-27T10:32:42Z",
+      "topics": [],
+      "stars": 0,
+      "pushedAt": "2026-07-21T04:10:14Z",
+      "cover": null
+    },
+    {
+      "id": "ApnaDhaba-Food-Ordering-System",
+      "title": "ApnaDhaba Food Ordering System",
+      "description": "A modern restaurant management and food ordering solution built using ASP.NET Core. Includes secure user authentication, product catalog, and integrated shopping cart logic.",
+      "url": "https://github.com/DeepB5155/ApnaDhaba-Food-Ordering-System",
+      "live": null,
+      "languages": [
+        "CSS",
+        "JavaScript",
+        "HTML",
+        "C#",
+        "SCSS"
+      ],
+      "langBytes": {
+        "CSS": 821495,
+        "JavaScript": 246200,
+        "HTML": 152969,
+        "C#": 116278,
+        "SCSS": 50341
+      },
+      "size": 1387283,
+      "createdAt": "2026-05-07T15:25:13Z",
+      "topics": [],
+      "stars": 0,
+      "pushedAt": "2026-05-07T15:29:59Z",
+      "cover": null
+    },
+    {
+      "id": "StudentPortal-Pro",
+      "title": "StudentPortal Pro",
+      "description": "Enterprise-grade Academic Information Management System. A decoupled full-stack application leveraging .NET 8, React, and SQL Server to streamline student enrollment, faculty assignments, and grading workflows",
+      "url": "https://github.com/DeepB5155/StudentPortal-Pro",
+      "live": null,
+      "languages": [
+        "TypeScript",
+        "C#",
+        "CSS",
+        "JavaScript",
+        "HTML"
+      ],
+      "langBytes": {
+        "TypeScript": 139907,
+        "C#": 118705,
+        "CSS": 979,
+        "JavaScript": 699,
+        "HTML": 366
+      },
+      "size": 260656,
+      "createdAt": "2026-05-04T17:36:49Z",
+      "topics": [],
+      "stars": 0,
+      "pushedAt": "2026-05-04T17:48:16Z",
+      "cover": null
+    },
+    {
+      "id": "Logic-Circuit-Simulator",
+      "title": "Logic Circuit Simulator",
+      "description": "A real-time, interactive Logic Circuit Simulator. Design, debug, and visualize digital logic systems with a drag-and-drop interface. Supports basic gates, flip-flops, and custom I/O.",
+      "url": "https://github.com/DeepB5155/Logic-Circuit-Simulator",
+      "live": null,
+      "languages": [
+        "JavaScript",
+        "C",
+        "CSS",
+        "HTML"
+      ],
+      "langBytes": {
+        "JavaScript": 41404,
+        "C": 8173,
+        "CSS": 7784,
+        "HTML": 6382
+      },
+      "size": 63743,
+      "createdAt": "2026-04-16T06:55:19Z",
+      "topics": [],
+      "stars": 0,
+      "pushedAt": "2026-04-16T07:01:15Z",
+      "cover": null
+    },
+    {
+      "id": "kidswear_e-commerce-platform",
+      "title": "Kidswear E Commerce Platform",
+      "description": "A comprehensive full-stack e-commerce application featuring a customer-facing frontend, a robust backend API, and a dedicated admin panel for management.",
+      "url": "https://github.com/DeepB5155/kidswear_e-commerce-platform",
+      "live": null,
+      "languages": [
+        "JavaScript",
+        "CSS",
+        "HTML"
+      ],
+      "langBytes": {
+        "JavaScript": 213211,
+        "CSS": 8407,
+        "HTML": 723
+      },
+      "size": 222341,
+      "createdAt": "2026-03-23T06:29:21Z",
+      "topics": [],
+      "stars": 0,
+      "pushedAt": "2026-03-23T06:29:52Z",
+      "cover": null
+    },
+    {
+      "id": "Todo_List",
+      "title": "Todo List",
+      "description": "This project is a simple and functional To-Do List application where users can add, edit, and remove tasks. The application allows users to keep track of their daily tasks and organize them…",
+      "url": "https://github.com/DeepB5155/Todo_List",
+      "live": null,
+      "languages": [
+        "JavaScript",
+        "CSS",
+        "HTML"
+      ],
+      "langBytes": {
+        "JavaScript": 7661,
+        "CSS": 664,
+        "HTML": 369
+      },
+      "size": 8694,
+      "createdAt": "2024-10-02T09:42:02Z",
+      "topics": [],
+      "stars": 0,
+      "pushedAt": "2024-10-02T09:47:46Z",
+      "cover": null
+    },
+    {
+      "id": "Password_Generator",
+      "title": "Password Generator",
+      "description": "This project is a simple Password Generator application built using React. The application allows users to create strong, random passwords with customizable options such as password length…",
+      "url": "https://github.com/DeepB5155/Password_Generator",
+      "live": null,
+      "languages": [
+        "JavaScript",
+        "HTML",
+        "CSS"
+      ],
+      "langBytes": {
+        "JavaScript": 3514,
+        "HTML": 418,
+        "CSS": 58
+      },
+      "size": 3990,
+      "createdAt": "2024-10-02T08:13:25Z",
+      "topics": [],
+      "stars": 0,
+      "pushedAt": "2024-10-02T09:31:22Z",
+      "cover": null
+    }
+  ]
+}

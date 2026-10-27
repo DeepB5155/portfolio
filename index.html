@@ -3,12 +3,41 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Deep Patel | Full-Stack Developer | .NET 8 &amp; React Native Specialist</title>
-  <meta name="description" content="Professional full-stack developer building production-ready web and mobile apps. Specialized in .NET 8, React, and React Native. 10+ projects delivered."/>
+  <title>Deep Patel | Full-Stack Developer | .NET 10 &amp; React Native Specialist</title>
+  <meta name="description" content="Professional full-stack developer building production-ready web and mobile apps. Specialized in .NET 10, React, and React Native. 10+ projects delivered."/>
   <meta property="og:title" content="Deep Patel | Custom Software Development"/>
   <meta property="og:description" content="Launch your web or mobile product with a specialized .NET and React developer. Production-ready software delivered in 2–3 weeks."/>
   <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://deep-patel-53.netlify.app"/>
+  <meta property="og:site_name" content="Deep Patel"/>
+  <meta property="og:url" content="https://deep-patel-53.netlify.app/"/>
+  <meta property="og:image" content="https://deep-patel-53.netlify.app/assets/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Deep Patel — Full-Stack Developer, .NET 10 and React"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Deep Patel | Custom Software Development"/>
+  <meta name="twitter:description" content="Production-ready web and mobile apps with .NET 10, React and React Native — delivered in 2–3 weeks."/>
+  <meta name="twitter:image" content="https://deep-patel-53.netlify.app/assets/og-image.png"/>
+  <link rel="canonical" href="https://deep-patel-53.netlify.app/"/>
+  <meta name="theme-color" content="#09090C"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Deep Patel",
+    "jobTitle": "Full-Stack Developer",
+    "url": "https://deep-patel-53.netlify.app/",
+    "image": "https://deep-patel-53.netlify.app/Photos/Deep%20Face.jpg",
+    "email": "mailto:deepb5155@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Gandhinagar", "addressCountry": "IN" },
+    "knowsAbout": [".NET 10", "ASP.NET Core", "React", "React Native", "Node.js", "TypeScript", "PostgreSQL", "SQL Server", "MongoDB", "Docker"],
+    "sameAs": [
+      "https://github.com/DeepB5155",
+      "https://www.linkedin.com/in/deep-patel-22a1b1300/",
+      "https://www.upwork.com/freelancers/~015560bb071f2642ee"
+    ]
+  }
+  </script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2300D4C8'/%3E%3Ctext x='50' y='65' font-family='Arial' font-size='40' font-weight='bold' fill='white' text-anchor='middle'%3EDP%3C/text%3E%3C/svg%3E"/>
   
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -24,6 +53,10 @@
   <link rel="stylesheet" href="css/theme.css"/>
   <link rel="stylesheet" href="css/responsive.css"/>
   <link rel="stylesheet" href="css/modal.css"/>
+  <link rel="stylesheet" href="css/github-projects.css"/>
+  <link rel="stylesheet" href="css/faq.css"/>
+  <link rel="stylesheet" href="css/universe.css"/>
+  <link rel="stylesheet" href="css/game.css"/>
   
   <script defer src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -71,7 +104,7 @@
       <div class="nav-actions">
         <button id="theme-toggle" aria-label="Toggle theme"></button>
         <a href="#contact" class="btn btn-primary btn-sm">Start Your Project</a>
-        <button id="nav-hamburger" class="nav-hamburger">
+        <button id="nav-hamburger" class="nav-hamburger" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -104,6 +137,7 @@
         <div class="hero-ctas hero-anim">
           <a href="#contact" class="btn btn-primary btn-lg">Start Your Project</a>
           <a href="#work" class="btn btn-ghost btn-lg">View Case Studies</a>
+          <button type="button" class="btn btn-ghost btn-lg game-play-btn" data-open-game>&#9654; Play: Core Defense</button>
         </div>
         <div class="hero-stats hero-anim">
           <div class="stat-item"><span class="stat-val">10+</span><span class="stat-label">Projects Shipped</span></div>
@@ -128,7 +162,7 @@
       <div class="section-label reveal"><span>01</span> / About</div>
       <div class="about-grid">
         <div class="reveal">
-          <img src="Photos/Deep Face.jpg" alt="Deep Patel — Full-Stack Developer" class="about-image"/>
+          <img src="Photos/Deep Face.jpg" alt="Deep Patel — Full-Stack Developer" class="about-image" loading="lazy" decoding="async"/>
           <h2 class="h2" style="margin-bottom: var(--s-6);">Technical Expertise with a Product Mindset</h2>
           <p class="about-bio text-secondary">
             I started building software in college because I wanted to solve real problems, not just pass exams. Over 2 years I've shipped 10+ projects — from food delivery platforms and ride-sharing ecosystems to enterprise management systems and e-commerce stores. I enjoy working across the full stack, and I take pride in delivering code that is clean, maintainable, and something clients are genuinely proud to show their customers.
@@ -143,7 +177,7 @@
           <div class="glass-card info-card">
             <svg class="info-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
             <h4 class="h4">Specialization</h4>
-            <p class="body-sm text-secondary" style="margin-top: 8px;">Expert in .NET 8 backends, React web platforms, and cross-platform React Native mobile apps.</p>
+            <p class="body-sm text-secondary" style="margin-top: 8px;">Expert in .NET 10 backends, React web platforms, and cross-platform React Native mobile apps.</p>
           </div>
           <div class="glass-card info-card">
             <svg class="info-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -171,7 +205,7 @@
           <div class="badge-featured">Most Requested</div>
           <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg></div>
           <h3 class="h3">Web Application Development</h3>
-          <p>High-speed web platforms tailored to your specific business logic. Built with .NET 8 and React for a fast, reliable user experience.</p>
+          <p>High-speed web platforms tailored to your specific business logic. Built with .NET 10 and React for a fast, reliable user experience.</p>
         </div>
         <div class="glass-card service-card">
           <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg></div>
@@ -181,7 +215,7 @@
         <div class="glass-card service-card">
           <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg></div>
           <h3 class="h3">Backend APIs & Microservices</h3>
-          <p>Secure, high-performance API development and database management using .NET 8. The reliable engine that keeps your data safe and your app running.</p>
+          <p>Secure, high-performance API development and database management using .NET 10. The reliable engine that keeps your data safe and your app running.</p>
         </div>
         <div class="glass-card service-card">
           <div class="service-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg></div>
@@ -276,12 +310,12 @@
           <div class="project-info">
             <div class="project-tags">
               <span class="tag">Full-Stack Ride-Sharing</span>
-              <span class="tag tag-neutral">.NET 8</span>
+              <span class="tag tag-neutral">.NET 10</span>
               <span class="tag tag-neutral">React Native</span>
               <span class="tag tag-neutral">PostgreSQL</span>
             </div>
             <h3 class="project-title">RideO</h3>
-            <p class="project-desc">High-performance, cross-platform ride-sharing ecosystem built with .NET 8 Microservices, React Native, and dual-database architecture. Features unique Antigravity Routing Engine for frictionless urban transit.</p>
+            <p class="project-desc">High-performance, cross-platform ride-sharing ecosystem built with .NET 10 Microservices, React Native, and dual-database architecture. Features unique Antigravity Routing Engine for frictionless urban transit.</p>
           </div>
         </a>
         
@@ -296,7 +330,7 @@
           <div class="project-info">
             <div class="project-tags">
               <span class="tag">Enterprise SaaS</span>
-              <span class="tag tag-neutral">ASP.NET Core 8</span>
+              <span class="tag tag-neutral">ASP.NET Core 10</span>
               <span class="tag tag-neutral">React / TypeScript</span>
             </div>
             <h3 class="project-title">Student Portal</h3>
@@ -314,12 +348,12 @@
           </div>
           <div class="project-info">
             <div class="project-tags">
-              <span class="tag">Mobile App + Backend</span>
-              <span class="tag tag-neutral">React Native</span>
-              <span class="tag tag-neutral">.NET APIs</span>
+              <span class="tag">Food Ordering Platform</span>
+              <span class="tag tag-neutral">ASP.NET Core MVC</span>
+              <span class="tag tag-neutral">.NET 10 API</span>
             </div>
             <h3 class="project-title">ApnaDhaba</h3>
-            <p class="project-desc">Food ordering app specially designed for franchise businesses. Features online ordering, QR code scanning for in-shop menu selection, and seamless payment integration.</p>
+            <p class="project-desc">Full-stack food ordering platform with a decoupled .NET 10 API and MVC storefront. Features JWT authentication, guest and registered carts, address management, and order tracking.</p>
           </div>
         </a>
 
@@ -334,15 +368,15 @@
           <div class="project-info">
             <div class="project-tags">
               <span class="tag">Interactive Web Tool</span>
-              <span class="tag tag-neutral">React</span>
-              <span class="tag tag-neutral">Canvas/WebGL</span>
+              <span class="tag tag-neutral">C / WebAssembly</span>
+              <span class="tag tag-neutral">HTML5 Canvas</span>
             </div>
             <h3 class="project-title">Logic Circuit Simulator</h3>
-            <p class="project-desc">Real-time, interactive Logic Circuit Simulator. Design, debug, and visualize digital logic systems with drag-and-drop interface. Supports basic gates, flip-flops, and custom I/O.</p>
+            <p class="project-desc">Real-time logic circuit simulator powered by a C engine compiled to WebAssembly. Drag-and-drop gates, flip-flops, oscilloscope view, and automatic truth tables.</p>
           </div>
         </a>
 
-        <a href="https://github.com/DeepB5155/kidswear_ecommerce-platform" target="_blank" rel="noopener noreferrer" class="project-card" data-project-id="kidswear">
+        <a href="https://github.com/DeepB5155/kidswear_e-commerce-platform" target="_blank" rel="noopener noreferrer" class="project-card" data-project-id="kidswear">
           <div class="project-thumb">
             <div class="project-thumb-bg thumb-5"></div>
             <div class="thumb-label">Kidswear E-commerce</div>
@@ -353,21 +387,77 @@
           <div class="project-info">
             <div class="project-tags">
               <span class="tag">E-commerce Platform</span>
-              <span class="tag tag-neutral">React</span>
-              <span class="tag tag-neutral">Multi-market</span>
+              <span class="tag tag-neutral">React 19</span>
+              <span class="tag tag-neutral">Node.js</span>
             </div>
             <h3 class="project-title">Kidswear E-commerce Platform</h3>
-            <p class="project-desc">E-commerce platform specially designed for kids' clothing. Serves India and US markets with full product catalog, shopping cart, payments, and multi-market support.</p>
+            <p class="project-desc">Subscription-free store with a customer storefront and admin panel. Google login, inventory control, automated PDF invoices, and email notifications.</p>
           </div>
         </a>
       </div>
+
+      <div id="more-projects" class="more-projects" hidden>
+        <div class="more-head">
+          <h3 class="h3">More from GitHub</h3>
+          <div class="filter-chips" role="group" aria-label="Filter projects by language"></div>
+        </div>
+        <div class="more-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Universe Section -->
+  <section id="universe">
+    <div class="container section-inner">
+      <div class="section-label reveal"><span>05</span> / Project Universe</div>
+      <h2 class="h2 reveal">Every repo I ship, as a living world.</h2>
+      <p class="universe-sub text-secondary reveal">Each project is pulled live from my GitHub. Flip between a galaxy and a city. A new repo adds a new planet or building automatically.</p>
+
+      <div class="universe-stage reveal" id="universe-stage" data-mode="galaxy">
+        <canvas id="universe-canvas" aria-label="Interactive 3D map of my GitHub projects. A keyboard-accessible list follows below." role="img"></canvas>
+
+        <div class="universe-toolbar">
+          <div class="universe-toggle" role="group" aria-label="Choose view">
+            <button type="button" data-mode="galaxy" aria-pressed="true">Galaxy</button>
+            <button type="button" data-mode="city" aria-pressed="false">City</button>
+          </div>
+          <div class="universe-weather">
+            <button type="button" data-weather aria-pressed="false">Rain</button>
+          </div>
+          <div class="universe-zoom" role="group" aria-label="Zoom">
+            <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+            <button type="button" data-zoom="out" aria-label="Zoom out">&minus;</button>
+          </div>
+        </div>
+
+        <div class="universe-card" id="universe-card" role="dialog" aria-label="Project details" hidden>
+          <button type="button" class="universe-card-close" aria-label="Close details">&times;</button>
+          <span class="universe-card-badge" hidden></span>
+          <h3 class="universe-card-title"></h3>
+          <p class="universe-card-meta"></p>
+          <p class="universe-card-desc"></p>
+          <div class="universe-card-bar" aria-hidden="true"></div>
+          <div class="universe-card-langs"></div>
+          <div class="universe-card-actions"></div>
+        </div>
+
+        <div class="universe-tooltip" hidden></div>
+        <div class="universe-legend" aria-hidden="true"></div>
+        <div class="universe-hint" aria-hidden="true">
+          <span class="hint-galaxy">Planet size = recent activity · ring = live demo · rockets fly between projects</span>
+          <span class="hint-city">Building height = amount of code · lit windows = recent activity · parks = room to grow</span>
+          <span>Drag to rotate · click a project</span>
+        </div>
+      </div>
+
+      <div class="universe-list" id="universe-list" aria-label="All projects"></div>
     </div>
   </section>
 
   <!-- Stack Section -->
   <section id="stack">
     <div class="container section-inner">
-      <div class="section-label reveal" style="justify-content: center; margin-bottom: var(--s-8);"><span>05</span> / Capabilities</div>
+      <div class="section-label reveal" style="justify-content: center; margin-bottom: var(--s-8);"><span>06</span> / Capabilities</div>
       <h2 class="h2 reveal" style="text-align: center;">Technical Stack</h2>
       
       <div class="orbit-container reveal">
@@ -378,37 +468,76 @@
         
         <!-- Inner Ring -->
         <div class="orbit-ring orbit-ring-1">
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>React</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>React Native</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Node.js</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>.NET 8</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>ASP.NET</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/react.svg')" aria-hidden="true"></span>React</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/dotnet.svg')" aria-hidden="true"></span>.NET 10</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/nodedotjs.svg')" aria-hidden="true"></span>Node.js</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/typescript.svg')" aria-hidden="true"></span>TypeScript</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/vite.svg')" aria-hidden="true"></span>Vite</div>
         </div>
 
         <!-- Outer Ring -->
         <div class="orbit-ring orbit-ring-2">
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>PostgreSQL</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>MongoDB</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>Microservices</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>REST APIs</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>MFA Security</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Payments</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>GIS Integration</div>
-          <div class="orbit-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Real-time</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/postgresql.svg')" aria-hidden="true"></span>PostgreSQL</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/mongodb.svg')" aria-hidden="true"></span>MongoDB</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/microsoftsqlserver.svg')" aria-hidden="true"></span>SQL Server</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/sqlite.svg')" aria-hidden="true"></span>SQLite</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/docker.svg')" aria-hidden="true"></span>Docker</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/swagger.svg')" aria-hidden="true"></span>Swagger</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/jsonwebtokens.svg')" aria-hidden="true"></span>JWT / OAuth2</div>
+          <div class="orbit-item"><span class="orbit-logo" style="--icon:url('../assets/icons/git.svg')" aria-hidden="true"></span>Git</div>
         </div>
       </div>
 
       <!-- Mobile Fallback Grid -->
       <div class="stack-mobile-grid reveal">
         <div class="stack-mobile-item">React</div>
-        <div class="stack-mobile-item">React Native</div>
-        <div class="stack-mobile-item">.NET 8</div>
+        <div class="stack-mobile-item">.NET 10</div>
         <div class="stack-mobile-item">Node.js</div>
+        <div class="stack-mobile-item">TypeScript</div>
+        <div class="stack-mobile-item">Vite</div>
         <div class="stack-mobile-item">PostgreSQL</div>
         <div class="stack-mobile-item">MongoDB</div>
-        <div class="stack-mobile-item">Microservices</div>
-        <div class="stack-mobile-item">MFA Security</div>
-        <div class="stack-mobile-item">Real-time</div>
+        <div class="stack-mobile-item">SQL Server</div>
+        <div class="stack-mobile-item">SQLite</div>
+        <div class="stack-mobile-item">Docker</div>
+        <div class="stack-mobile-item">Swagger</div>
+        <div class="stack-mobile-item">JWT / OAuth2</div>
+        <div class="stack-mobile-item">Git</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq">
+    <div class="container section-inner">
+      <div class="section-label reveal"><span>07</span> / FAQ</div>
+      <h2 class="h2 reveal">Common Questions</h2>
+
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary>How long does a typical project take?</summary>
+          <p>Most projects ship in 2–3 weeks. After a short discovery call I give you a clear timeline and weekly milestones so you can see real progress along the way.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What technologies do you work with?</summary>
+          <p>.NET 10 and ASP.NET Core on the backend, React and TypeScript for web, React Native for mobile, plus Node.js, SQL Server, PostgreSQL, MongoDB and Docker where the project calls for them.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Will I own the code?</summary>
+          <p>Yes. You get a platform you own entirely, with no recurring subscription fees, and a handoff that includes documentation.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How do we communicate during the build?</summary>
+          <p>I reply to new inquiries within 24 hours and share regular updates throughout development so you can give feedback in real time. Email, WhatsApp, or a scheduled call, whichever you prefer.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you offer support after launch?</summary>
+          <p>Launch includes final testing, production deployment and post-launch support, so you aren't left on your own after go-live.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Which time zone do you work in?</summary>
+          <p>I work remotely from Gandhinagar, India (UTC+5:30) and communicate in English.</p>
+        </details>
       </div>
     </div>
   </section>
@@ -427,7 +556,7 @@
   <!-- Contact Section -->
   <section id="contact">
     <div class="container section-inner">
-      <div class="section-label reveal"><span>06</span> / Contact</div>
+      <div class="section-label reveal"><span>08</span> / Contact</div>
       
       <div class="contact-grid">
         <div class="contact-info reveal">
@@ -461,7 +590,7 @@
         
         <form class="contact-form reveal" id="contactForm" novalidate>
           <input type="hidden" name="_subject" value="New Inquiry from Portfolio Website!">
-          <input type="hidden" name="_template" value="box">
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
           <div class="form-group">
             <input type="text" id="name" name="name" class="form-input" placeholder=" " required />
             <label for="name" class="form-label">Name</label>
@@ -503,9 +632,187 @@
     </div>
   </footer>
 
+  <!-- Game: Core Defense -->
+  <button type="button" class="game-fab" data-open-game aria-label="Play the Core Defense game"><span aria-hidden="true">&#9654;</span><span class="game-fab-text"> Play</span></button>
+
+  <div id="game-overlay" class="game-overlay" role="dialog" aria-modal="true" aria-labelledby="game-title" tabindex="-1" hidden>
+    <canvas id="game-canvas" aria-hidden="true"></canvas>
+
+    <div class="game-hud" hidden>
+      <div class="hud-top-left">
+        <div class="hud-money">$<strong id="game-money">800</strong></div>
+        <div class="hud-small">Score <strong id="game-score">0</strong></div>
+        <canvas class="hud-radar" id="game-radar" width="140" height="140" aria-hidden="true"></canvas>
+      </div>
+      <div class="hud-top-center">
+        <span class="hud-small" id="game-round">Round 1 / 5</span>
+        <span class="hud-small" id="game-enemies">Hostiles: 0</span>
+        <div class="hud-core"><span>CORE</span><div class="hud-bar"><i id="game-core-bar"></i></div><strong id="game-core-pct">100%</strong></div>
+        <div class="hud-fw" id="game-fw" aria-label="Firewall gate status"></div>
+      </div>
+      <div class="hud-bottom-left">
+        <div class="hud-vital"><span>HP</span><strong id="game-health">100</strong></div>
+        <div class="hud-vital armor"><span>ARMOR</span><strong id="game-armor">0</strong></div>
+      </div>
+      <div class="hud-bottom-right">
+        <span class="hud-weapon" id="game-weapon">Pistol</span>
+        <div class="hud-ammo"><strong id="game-ammo">12</strong><span id="game-reserve">/ 48</span></div>
+      </div>
+      <div class="hud-killfeed" id="game-killfeed" aria-live="polite"></div>
+    </div>
+
+    <div class="game-crosshair" id="game-crosshair" hidden><i></i><i></i><i></i><i></i></div>
+    <div class="game-hitmarker" id="game-hitmarker"></div>
+    <div class="game-scope" id="game-scope" hidden></div>
+    <div class="dmg-fx" id="game-fx" aria-hidden="true"></div>
+    <div class="dmg-dir" id="game-dmgdir" aria-hidden="true"></div>
+    <div class="game-streak" id="game-streak" aria-hidden="true"></div>
+    <div class="game-prompt" id="game-prompt" role="status" hidden></div>
+
+    <div class="game-buy" id="game-buy" hidden>
+      <div class="buy-head">
+        <div>
+          <p class="game-kicker" id="buy-round">Round 1 / 5 · Buy phase</p>
+          <h3>Choose your loadout</h3>
+        </div>
+        <div class="buy-money">$<strong id="buy-money">800</strong></div>
+      </div>
+      <div class="buy-top">
+        <div>
+          <p class="buy-intel" id="buy-intel"></p>
+          <p class="buy-tip" id="buy-tip"></p>
+        </div>
+        <div class="buy-map-wrap">
+          <canvas id="buy-map" width="200" height="200" aria-label="Map showing how many enemies come from each gate"></canvas>
+          <span class="buy-map-cap">Red = hostiles per gate · yellow = arc traps · cyan = EMP terminals</span>
+        </div>
+      </div>
+      <div class="buy-grid">
+        <button type="button" class="buy-item" data-buy="smg"><span class="buy-name">SMG</span><span class="buy-desc">Fast fire, 30 rounds, good up close</span><span class="buy-cost">$150</span></button>
+        <button type="button" class="buy-item" data-buy="rifle"><span class="buy-name">Rifle</span><span class="buy-desc">Accurate full-auto, strong all-rounder</span><span class="buy-cost">$350</span></button>
+        <button type="button" class="buy-item" data-buy="sniper"><span class="buy-name">Sniper</span><span class="buy-desc">One-shot power, right-click to scope</span><span class="buy-cost">$550</span></button>
+        <button type="button" class="buy-item" data-buy="armor"><span class="buy-name">Armor</span><span class="buy-desc">+50 armor, absorbs 60% of damage</span><span class="buy-cost">$100</span></button>
+        <button type="button" class="buy-item" data-buy="medkit"><span class="buy-name">Medkit</span><span class="buy-desc">Restore 50 health</span><span class="buy-cost">$80</span></button>
+        <button type="button" class="buy-item" data-buy="sentry"><span class="buy-name">Sentry turret</span><span class="buy-desc">Auto-gun placed in front of you</span><span class="buy-cost">$250</span></button>
+      </div>
+      <div class="buy-actions">
+        <span class="buy-hint">Weapons switch with keys 1-4. Ammo refills every round.</span>
+        <button type="button" class="btn btn-ghost btn-lg" id="buy-auto">Auto-buy (recommended)</button>
+        <button type="button" class="btn btn-primary btn-lg" id="buy-go">Start round &#9654;</button>
+      </div>
+    </div>
+
+    <div class="game-touch" id="game-touch" hidden>
+      <div class="touch-stick" id="touch-stick"><i></i></div>
+      <button type="button" class="touch-btn touch-fire" id="touch-fire" aria-label="Fire">FIRE</button>
+      <button type="button" class="touch-btn touch-reload" id="touch-reload" aria-label="Reload">R</button>
+      <button type="button" class="touch-btn touch-jump" id="touch-jump" aria-label="Jump">&#8593;</button>
+      <button type="button" class="touch-btn touch-act" id="touch-act" aria-label="Use gate firewall or EMP terminal" hidden>USE</button>
+    </div>
+
+    <div class="game-top-actions">
+      <button type="button" class="game-icon-btn" id="game-help-open" aria-label="How to play">?</button>
+      <button type="button" class="game-icon-btn" id="game-music" aria-pressed="true" aria-label="Music on">&#9835;</button>
+      <button type="button" class="game-icon-btn" id="game-sound" aria-pressed="false" aria-label="Sound off">&#128263;</button>
+      <button type="button" class="game-icon-btn" id="game-close" aria-label="Close game">&times;</button>
+    </div>
+
+    <div class="game-toast" id="game-toast" role="status" aria-live="polite"></div>
+    <div class="game-flash" id="game-flash"></div>
+
+    <div class="game-screen game-pause" id="game-pause" hidden>
+      <h2>Paused</h2>
+      <p class="game-lead">Click resume to lock your mouse and keep fighting.</p>
+      <div class="game-end-actions">
+        <button type="button" class="btn btn-primary btn-lg" id="game-resume">Resume</button>
+        <button type="button" class="btn btn-ghost btn-lg" id="game-quit">&larr; Back to website</button>
+      </div>
+    </div>
+
+    <div class="game-screen game-help" id="game-help" hidden>
+      <h2>How to play</h2>
+      <div class="game-steps">
+        <div><b>1 · PLAN</b><span>Before every round you get money to spend. Check the <em>Intel</em> and map: they show which gates attack and with what. Buy weapons, armor, a medkit or a sentry.</span></div>
+        <div><b>2 · FIGHT</b><span>Hostile bots rush the server core and shoot you. Kill them, dodge their red shots, and reload behind cover.</span></div>
+        <div><b>3 · SURVIVE</b><span>If the core hits 0% or you are eliminated, you lose. Clear 5 rounds to win. Killing bots and serving users earns money.</span></div>
+      </div>
+      <div class="game-legend">
+        <div><i class="lg-red"></i><span><b>Red visor</b> = enemy bot. Shoot it. Headshots do 2.5x damage.</span></div>
+        <div><i class="lg-green"></i><span><b>Green visor + USER tag</b> = legit visitor. <b>Do not shoot.</b> Let them reach the core for +$50.</span></div>
+        <div><i class="lg-core"></i><span><b>Server core</b> in the middle. Enemies attack it, so keep them away from it.</span></div>
+      </div>
+      <div class="game-keys">
+        <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>Move</span></div>
+        <div><kbd>Mouse</kbd><span>Aim</span></div>
+        <div><kbd>Click</kbd><span>Fire</span></div>
+        <div><kbd>R</kbd><span>Reload</span></div>
+        <div><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd><span>Switch weapon</span></div>
+        <div><kbd>Space</kbd><span>Jump</span></div>
+        <div><kbd>Shift</kbd><span>Sprint</span></div>
+        <div><kbd>Right-click</kbd><span>Aim down sights (scope on sniper)</span></div>
+        <div><kbd>F</kbd><span>Use gate firewall / EMP terminal</span></div>
+        <div><kbd>Esc</kbd><span>Pause</span></div>
+      </div>
+      <div class="game-legend">
+        <div><i class="lg-trap"></i><span><b>Arc traps</b> (yellow plates in each lane) flash amber, then zap everything on them. They hurt bots, users and you.</span></div>
+        <div><i class="lg-fw"></i><span><b>Firewall</b>: stand at a gate and press F to seal it for 7s. Incoming bots wait outside (so do users). Recharges in about 22s.</span></div>
+        <div><i class="lg-emp"></i><span><b>EMP terminals</b> on the side walls: press F once per round to stun every bot and wipe their shots.</span></div>
+        <div><i class="lg-crate"></i><span><b>Supply crate</b>: a green beam marks a hidden crate each round. Walk into it for cash, ammo, armor, health or core repair.</span></div>
+      </div>
+      <p class="game-note">On phones: left joystick to move, drag on the right to look, FIRE / R / jump buttons.</p>
+      <div class="game-tips">
+        <b>Planning tips:</b> buy armor and a rifle first. Sentries deploy toward the busiest gate, so a sentry or two covers the core while you hunt. Save money in easy rounds, spend more when the intel shows DDoS bots or a boss. Strafe to dodge shots, headshots end fights fast.
+      </div>
+      <button type="button" class="btn btn-primary btn-lg" id="game-help-close">Got it</button>
+    </div>
+
+    <div class="game-coach" id="game-coach" hidden>
+      <div class="coach-top"><span id="coach-step">Training</span><button type="button" id="coach-skip">Skip training</button></div>
+      <strong id="coach-title"></strong>
+      <p id="coach-text"></p>
+      <button type="button" class="btn btn-primary" id="coach-next" hidden>Start the real game</button>
+    </div>
+
+    <div class="game-screen game-start" id="game-start">
+      <p class="game-kicker">First-person shooter · 5 rounds</p>
+      <h2 id="game-title">Core Defense</h2>
+      <p class="game-lead">Defend a server core in a cyber data center. Plan your loadout, then fight. New here? Take the quick guided training first.</p>
+      <div class="game-steps">
+        <div><b>1 · PLAN</b><span>Spend money on weapons and armor before each round. The intel shows where enemies come from.</span></div>
+        <div><b>2 · FIGHT</b><span>Shoot red-visor bots. Never shoot green-visor users: they are real visitors.</span></div>
+        <div><b>3 · SURVIVE</b><span>Keep the core above 0% for 5 rounds and win.</span></div>
+      </div>
+      <div class="game-start-actions">
+        <button type="button" class="btn btn-primary btn-lg" id="game-tutorial-btn">Play training (about 90 s)</button>
+        <button type="button" class="btn btn-ghost btn-lg" id="game-start-btn">Skip, deploy now</button>
+      </div>
+      <button type="button" class="game-link-btn" id="game-help-btn">How to play, controls and tips</button>
+      <button type="button" class="btn btn-ghost" id="game-back-start">&larr; Back to website</button>
+      <p class="game-note" id="game-best"></p>
+    </div>
+
+    <div class="game-screen game-end" id="game-end" hidden>
+      <p class="game-kicker" id="game-end-kicker">All rounds cleared</p>
+      <h2 id="game-end-title">Core secured</h2>
+      <div class="game-summary">
+        <div><span>Score</span><strong id="game-end-score">0</strong></div>
+        <div><span>Bots down</span><strong id="game-end-blocked">0</strong></div>
+        <div><span>Core</span><strong id="game-end-uptime">0%</strong></div>
+        <div><span>Best</span><strong id="game-end-best">0</strong></div>
+      </div>
+      <div class="game-delivered" id="game-end-delivered"></div>
+      <p class="game-lead" id="game-end-msg"></p>
+      <div class="game-end-actions">
+        <a href="#contact" class="btn btn-primary btn-lg" id="game-cta">Start your project</a>
+        <button type="button" class="btn btn-ghost btn-lg" id="game-again">Play again</button>
+        <button type="button" class="btn btn-ghost btn-lg" id="game-back-end">&larr; Back to website</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Case Study Modal -->
   <div id="project-modal" class="modal-backdrop">
-    <div class="modal-content glass-card">
+    <div class="modal-content glass-card" role="dialog" aria-modal="true" aria-labelledby="modal-title-text" tabindex="-1">
       <button class="modal-close" aria-label="Close modal">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>

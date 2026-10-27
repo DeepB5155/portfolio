@@ -61,6 +61,11 @@ section {
 }
 
 /* ---- CURSOR ---- */
+#cursor-dot, #cursor-ring { display: none; top: 0; left: 0; }
+.has-custom-cursor #cursor-dot, .has-custom-cursor #cursor-ring { display: block; }
+@media (hover: none), (pointer: coarse) {
+  #cursor-dot, #cursor-ring { display: none !important; }
+}
 #cursor-dot {
   position: fixed;
   width: 6px;
@@ -583,6 +588,12 @@ section {
   box-shadow: 0 0 20px var(--accent-glow);
 }
 .orbit-item svg { width: 20px; height: 20px; }
+.orbit-logo {
+  width: 20px; height: 20px;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
 
 /* ---- CTA SECTION ---- */
 #cta {

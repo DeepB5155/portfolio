@@ -1,8 +1,9 @@
 export function initCursor() {
-  if (window.matchMedia('(pointer: coarse)').matches) return; // skip touch
+  if (window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(hover: none)').matches) return; // skip touch
   const dot = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
   if (!dot || !ring) return;
+  document.documentElement.classList.add('has-custom-cursor');
 
   let mx = -100, my = -100, rx = -100, ry = -100;
 

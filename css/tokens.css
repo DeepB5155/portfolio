@@ -64,11 +64,11 @@
   --shadow-accent: 0 0 48px rgba(0,212,200,0.12);
 
   /* --- Thumbs --- */
-  --thumb-1: url('../Photos/RideO/admin 2.png');
-  --thumb-2: url('../Photos/Student PortaL/Admin_Function( Manage_Exam ).png');
-  --thumb-3: url('../Photos/ApnaDhaba/Picture1.png');
-  --thumb-4: url('../Photos/Logic Circuit Simulator/2.png');
-  --thumb-5: url('../Photos/Kidswear e-commerce/user 2.png');
+  --thumb-1: url('../assets/img/rideo/02.webp');
+  --thumb-2: url('../assets/img/student-portal/04.webp');
+  --thumb-3: url('../assets/img/apnadhaba/05.webp');
+  --thumb-4: url('../assets/img/logic-sim/02.webp');
+  --thumb-5: url('../assets/img/kidswear/09.webp');
 
   /* --- Typography --- */
   --font-display: 'Space Grotesk', sans-serif;

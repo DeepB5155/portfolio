@@ -11,19 +11,22 @@ export function initNav() {
   }, { passive: true });
 
   // Hamburger toggle
-  hamburger?.addEventListener('click', () => {
-    const open = hamburger.classList.toggle('open');
+  const setMenu = (open) => {
+    hamburger?.classList.toggle('open', open);
+    hamburger?.setAttribute('aria-expanded', String(open));
+    hamburger?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     mobileMenu?.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  hamburger?.addEventListener('click', () => setMenu(!hamburger.classList.contains('open')));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && hamburger?.classList.contains('open')) setMenu(false);
   });
 
   // Close on mobile link click
   mLinks?.forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger?.classList.remove('open');
-      mobileMenu?.classList.remove('open');
-      document.body.style.overflow = '';
-    });
+    link.addEventListener('click', () => setMenu(false));
   });
 
   // Active section highlighting
@@ -38,10 +41,11 @@ export function initNav() {
   sections.forEach(s => observer.observe(s));
 
   // Smooth scroll
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const target = document.querySelector(a.getAttribute('href'));
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' }); }
     });
   });
 }

@@ -168,3 +168,79 @@
   gap: var(--s-4);
   margin-top: var(--s-6);
 }
+
+/* Screenshot gallery */
+.modal-gallery {
+  display: flex;
+  gap: var(--s-3);
+  overflow-x: auto;
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-8);
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+.gallery-thumb {
+  flex: 0 0 auto;
+  height: 120px;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: border-color var(--t-fast), transform var(--t-fast);
+}
+
+.gallery-thumb img { height: 100%; width: auto; display: block; }
+.gallery-thumb:hover,
+.gallery-thumb:focus-visible { border-color: var(--accent); transform: translateY(-2px); }
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 360; /* Above modal (350), below cursor (400) */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-4);
+  padding: var(--s-4);
+  background: rgba(0, 0, 0, 0.92);
+}
+.lightbox.is-open { display: flex; }
+
+.lightbox-figure {
+  margin: 0;
+  max-width: min(1200px, 90vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+}
+.lightbox-img { max-width: 100%; max-height: 80vh; border-radius: var(--r-md); object-fit: contain; }
+.lightbox-caption { color: var(--text-secondary); font-size: 0.85rem; text-align: center; }
+
+.lightbox-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  color: #fff;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+.lightbox-btn:hover,
+.lightbox-btn:focus-visible { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+.lightbox-btn[hidden] { display: none; }
+.lightbox-close { position: absolute; top: var(--s-4); right: var(--s-4); }
+
+@media (max-width: 600px) {
+  .lightbox-prev, .lightbox-next { position: absolute; bottom: var(--s-6); }
+  .lightbox-prev { left: var(--s-6); }
+  .lightbox-next { right: var(--s-6); }
+}

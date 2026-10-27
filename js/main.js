@@ -6,6 +6,9 @@ import { initAnimations } from './animations.js';
 import { initCursor }     from './cursor.js';
 import { initModals }     from './modal.js';
 import { initContactForm } from './contact.js';
+import { initGithubProjects } from './github-projects.js';
+import { initUniverse } from './universe.js';
+import { initGame } from './fps-game.js';
 
 async function boot() {
   initTheme();
@@ -21,6 +24,9 @@ async function boot() {
   initAnimations();
   initModals();
   initContactForm();
+  initGithubProjects();
+  initUniverse();
+  initGame();
   positionOrbitItems();
 }
 
