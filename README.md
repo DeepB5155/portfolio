@@ -118,17 +118,6 @@ A small "Just for fun" link under the hero buttons (and a floating **Fun game** 
 - **Weapon animation:** per-weapon reload choreography (magazine drops and is re-seated, slide / bolt racked), sniper bolt cycle, slide recoil, weapon draw, sprint pose, aim-down-sights, mouse-look sway and a wall push-back pose.
 - **Sound:** everything is synthesised with Web Audio (gunshots per weapon, footsteps, reload clicks, positional bot chirps, explosions, hazard sounds, heartbeat at low health) plus an adaptive music loop that gets more intense in later rounds. The speaker button turns sound on (it is off by default); the note button toggles music.
 
-### 🩺 Free Website Audit (lead magnet)
-
-A **Free Website Audit** section (`js/site-audit.js`, `css/audit.css`) lets a visitor paste their website address and get scores for Performance, Accessibility, Best practices and SEO, Core Web Vitals, a screenshot and the six most important fixes, using the Google PageSpeed Insights (Lighthouse) API. The report ends with **Send me this report**, which pre-fills the contact form with the scores and issues, or a WhatsApp link with the same text.
-
-**One-time setup:** Google no longer allows anonymous PageSpeed requests, so create a free API key:
-1. In Google Cloud Console create a project, enable **PageSpeed Insights API**, then **Credentials → Create API key**.
-2. Restrict the key: *Application restrictions → Websites* (add your Netlify domain and `localhost`), and *API restrictions → PageSpeed Insights API*.
-3. Paste it into `index.html`: `<meta name="psi-key" content="YOUR_KEY">`.
-
-Until a key is set, the section falls back to a **Request a free manual audit** button that pre-fills the contact form with the visitor's address.
-
 ### 🌌 Project Universe
 
 An interactive Three.js section that turns the same synced GitHub data into a **3D world** — switch between a **Galaxy** (planets) and a **City** (buildings):
