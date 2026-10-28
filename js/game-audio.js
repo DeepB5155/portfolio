@@ -5,6 +5,48 @@ const CHORDS = [[57, 60, 64], [53, 57, 60], [55, 59, 62], [52, 56, 59]];
 const BASS = [33, 29, 31, 28];
 const ARP = [0, 1, 2, 1, 2, 1, 0, 2];
 
+// Layered gunshot recipes. crack = sharp transient, body = muzzle blast, boom = low thump,
+// tail = room decay, echoes = reflections off the walls, clicks = bolt / slide mechanics.
+const GUNS = {
+  pistol: {
+    len: 1.0, shaper: 2.4,
+    crack: { f: 2600, gain: 1.0, decay: 0.016 },
+    body: { f0: 5200, f1: 650, gain: 0.95, decay: 0.15 },
+    boom: { f0: 150, f1: 58, gain: 0.95, decay: 0.12 },
+    tail: { f0: 2600, f1: 260, gain: 0.2, decay: 0.7 },
+    echoes: [[0.045, 0.16], [0.11, 0.09]],
+    clicks: [[0.17, 0.07]]
+  },
+  smg: {
+    len: 0.7, shaper: 2.2,
+    crack: { f: 3200, gain: 1.0, decay: 0.012 },
+    body: { f0: 6200, f1: 950, gain: 0.8, decay: 0.09 },
+    boom: { f0: 170, f1: 72, gain: 0.7, decay: 0.08 },
+    tail: { f0: 3200, f1: 320, gain: 0.15, decay: 0.45 },
+    echoes: [[0.04, 0.12], [0.09, 0.06]],
+    clicks: []
+  },
+  rifle: {
+    len: 1.5, shaper: 2.6,
+    crack: { f: 2000, gain: 1.15, decay: 0.022 },
+    body: { f0: 4800, f1: 340, gain: 1.0, decay: 0.24 },
+    boom: { f0: 100, f1: 45, gain: 1.0, decay: 0.22 },
+    tail: { f0: 2300, f1: 170, gain: 0.24, decay: 1.1 },
+    echoes: [[0.06, 0.2], [0.14, 0.12], [0.26, 0.07]],
+    clicks: []
+  },
+  sniper: {
+    len: 2.5, shaper: 3.0,
+    crack: { f: 1500, gain: 1.3, decay: 0.032 },
+    body: { f0: 3800, f1: 190, gain: 1.2, decay: 0.55 },
+    boom: { f0: 72, f1: 30, gain: 1.35, decay: 0.5 },
+    tail: { f0: 1900, f1: 110, gain: 0.32, decay: 1.9 },
+    echoes: [[0.08, 0.28], [0.18, 0.2], [0.33, 0.13], [0.5, 0.08]],
+    clicks: [[0.62, 0.09], [0.78, 0.07]]
+  }
+};
+const GUN_VARIANTS = 3;
+
 export function createAudio() {
   let ctx = null;
   let master = null;
@@ -113,6 +155,92 @@ export function createAudio() {
 
   const dist = (d) => Math.max(0.08, 1 / (1 + d * 0.09));
 
+  // ----- sampled-style gunshots, rendered once with an OfflineAudioContext -----
+  const gunBufs = {};
+  let gunPrep = null;
+
+  function renderGun(key) {
+    const p = GUNS[key];
+    const sr = ctx.sampleRate;
+    const oc = new OfflineAudioContext(2, Math.ceil(sr * p.len), sr);
+    const nb = oc.createBuffer(2, sr * 2, sr);
+    for (let c = 0; c < 2; c++) { const d = nb.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+    const shaper = oc.createWaveShaper();
+    const curve = new Float32Array(2048);
+    for (let i = 0; i < curve.length; i++) { const x = (i / (curve.length - 1)) * 2 - 1; curve[i] = Math.tanh(x * p.shaper); }
+    shaper.curve = curve;
+    const out = oc.createGain();
+    out.gain.value = 0.85;
+    const sum = oc.createGain();
+    sum.connect(shaper).connect(out).connect(oc.destination);
+
+    const noiseLayer = (type, f0, f1, gain, decay, delay = 0, q = 0.7) => {
+      const src = oc.createBufferSource();
+      src.buffer = nb;
+      const f = oc.createBiquadFilter();
+      f.type = type;
+      f.Q.value = q;
+      f.frequency.setValueAtTime(f0, delay);
+      if (f1 !== f0) f.frequency.exponentialRampToValueAtTime(Math.max(30, f1), delay + decay);
+      const g = oc.createGain();
+      g.gain.setValueAtTime(0.0001, delay);
+      g.gain.linearRampToValueAtTime(gain, delay + 0.0006);
+      g.gain.exponentialRampToValueAtTime(0.0001, delay + decay);
+      src.connect(f).connect(g).connect(sum);
+      src.start(delay, Math.random() * 1.5, decay + 0.05);
+    };
+    const toneLayer = (f0, f1, gain, decay) => {
+      const o = oc.createOscillator();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(f0, 0);
+      o.frequency.exponentialRampToValueAtTime(f1, decay);
+      const g = oc.createGain();
+      g.gain.setValueAtTime(gain, 0);
+      g.gain.exponentialRampToValueAtTime(0.0001, decay);
+      o.connect(g).connect(sum);
+      o.start(0);
+      o.stop(decay + 0.02);
+    };
+
+    noiseLayer('highpass', p.crack.f * (0.9 + Math.random() * 0.2), p.crack.f, p.crack.gain, p.crack.decay);
+    noiseLayer('bandpass', 2400, 1200, p.crack.gain * 0.5, p.crack.decay * 2.2, 0, 0.8);
+    noiseLayer('lowpass', p.body.f0, p.body.f1, p.body.gain, p.body.decay);
+    toneLayer(p.boom.f0, p.boom.f1, p.boom.gain, p.boom.decay);
+    noiseLayer('lowpass', p.tail.f0, p.tail.f1, p.tail.gain, p.tail.decay, 0.01);
+    p.echoes.forEach(([delay, gain]) => {
+      noiseLayer('lowpass', p.body.f0 * 0.55, p.body.f1 * 0.7, gain * p.body.gain, p.body.decay * 1.1, delay);
+      noiseLayer('lowpass', p.tail.f0, p.tail.f1, gain * 0.35, p.tail.decay * 0.6, delay);
+    });
+    p.clicks.forEach(([delay, gain]) => {
+      noiseLayer('bandpass', 2600 + Math.random() * 600, 1800, gain, 0.02, delay, 1.4);
+      noiseLayer('highpass', 4500, 4500, gain * 0.5, 0.008, delay + 0.012);
+    });
+    return oc.startRendering();
+  }
+
+  function prepareGuns() {
+    if (gunPrep || typeof OfflineAudioContext === 'undefined') return gunPrep;
+    gunPrep = Promise.all(Object.keys(GUNS).map(async (key) => {
+      const list = [];
+      for (let v = 0; v < GUN_VARIANTS; v++) list.push(await renderGun(key));
+      gunBufs[key] = list;
+    })).catch(() => { gunPrep = null; });
+    return gunPrep;
+  }
+
+  function playGun(key, pan) {
+    const list = gunBufs[key];
+    if (!list || !list.length) return false;
+    const src = ctx.createBufferSource();
+    src.buffer = list[Math.floor(Math.random() * list.length)];
+    src.playbackRate.value = 0.96 + Math.random() * 0.08;
+    const g = route(pan, key === 'sniper' ? 0.3 : 0.18);
+    g.gain.value = key === 'sniper' ? 1.0 : key === 'smg' ? 0.8 : 0.9;
+    src.connect(g);
+    src.start();
+    return true;
+  }
+
   const api = {
     get enabled() { return enabled; },
     get musicOn() { return musicOn; },
@@ -121,6 +249,7 @@ export function createAudio() {
       if (on) {
         if (!ensure()) { enabled = false; return false; }
         if (ctx.state === 'suspended') ctx.resume();
+        prepareGuns();
         if (musicOn) api.startMusic();
       } else {
         api.stopMusic();
@@ -136,9 +265,18 @@ export function createAudio() {
     resume() { if (ctx && enabled && ctx.state === 'suspended') ctx.resume(); },
     tone,
     noise,
+    gunInfo() {
+      return Object.fromEntries(Object.entries(gunBufs).map(([k, list]) => {
+        const d = list[0].getChannelData(0);
+        let peak = 0, early = 0, late = 0;
+        for (let i = 0; i < d.length; i++) { const a = Math.abs(d[i]); if (a > peak) peak = a; if (i < d.length * 0.2) early += a * a; else late += a * a; }
+        return [k, { variants: list.length, seconds: +list[0].duration.toFixed(2), peak: +peak.toFixed(2), earlyToLate: +(early / (late || 1)).toFixed(1) }];
+      }));
+    },
 
     shot(key, pan = 0) {
       if (!live()) return;
+      if (playGun(key, pan)) return;
       if (key === 'sniper') {
         noise(0.55, { type: 'lowpass', f0: 2600, f1: 220, vol: 0.34, pan, wet: 0.5 });
         noise(0.05, { type: 'highpass', f0: 3000, vol: 0.2, pan, wet: 0.2 });

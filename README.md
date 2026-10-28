@@ -105,7 +105,7 @@ To run it locally: `node scripts/sync-github-projects.mjs`.
 
 ### 🎮 Core Defense — first-person shooter
 
-A **Play** button in the hero (and a small floating one) opens a full-screen Counter-Strike style FPS built with Three.js (`js/fps-game.js`, `css/game.css`). You defend a server core in a cyber data center over 5 rounds:
+A small "Just for fun" link under the hero buttons (and a floating **Fun game** pill) opens a full-screen Counter-Strike style FPS built with Three.js (`js/fps-game.js`, `css/game.css`). It is a bonus mini-game, deliberately low-key so the main focus stays on the work. You defend a server core in a cyber data center over 5 rounds:
 
 - **Buy phase** before every round (like CS): spend money on an SMG, rifle or sniper, armor, a medkit or an auto-firing sentry turret. The intel panel shows which gates the next wave will attack from, so you plan your loadout.
 - **Combat:** hostile bots (red visors) rush the core and shoot back; headshots do extra damage; weapons have recoil, reloads and a scope on the sniper.

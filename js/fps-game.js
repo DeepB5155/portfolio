@@ -141,7 +141,7 @@ export function initGame() {
   let fpsN = 0;
 
   let renderer, scene, camera, vm, muzzle, flashSprite, geoBox, mats, colliders, staticMeshes, hitMeshes, bots, bolts, tracers, sentries, particles, coreGroup, crystal, coreRings;
-  let botKit, decals, glows, debris, floaters, dmgDir, muzzleLight, panels, dust, hazards;
+  let botKit, decals, glows, debris, floaters, dmgDir, muzzleLight, panels, dust, hazards, gunEnv, gunMats, geoCyl, geoBall;
   const raycaster = new THREE.Raycaster();
   const losRay = new THREE.Raycaster();
   const tmpV = new THREE.Vector3();
@@ -475,81 +475,251 @@ export function initGame() {
     // Viewmodel
     vm = new THREE.Group();
     camera.add(vm);
+    geoCyl = new THREE.CylinderGeometry(0.5, 0.5, 1, 14);
+    geoBall = new THREE.SphereGeometry(0.5, 12, 10);
+    gunEnv = makeGunEnv();
+    gunMats = makeGunMaterials();
+    const gunLight = new THREE.PointLight(0xdfeaff, 1.1, 2.5, 2);
+    gunLight.position.set(0.1, 0.35, 0.15);
+    camera.add(gunLight);
     flashSprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture('#ffd27a'), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, fog: false }));
     flashSprite.visible = false;
 
     resize();
   }
 
+  // Soft studio-style reflections so the metal parts of the weapons actually look like metal
+  function makeGunEnv() {
+    const c = document.createElement('canvas');
+    c.width = 512; c.height = 256;
+    const g = c.getContext('2d');
+    const grad = g.createLinearGradient(0, 0, 0, 256);
+    grad.addColorStop(0, '#34455f');
+    grad.addColorStop(0.45, '#0e1522');
+    grad.addColorStop(1, '#06080d');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 512, 256);
+    g.fillStyle = '#ffffff';
+    for (let i = 0; i < 8; i++) g.fillRect(i * 64 + 12, 34, 40, 9);
+    g.fillStyle = '#7ce8ff';
+    g.fillRect(40, 96, 90, 10);
+    g.fillRect(330, 110, 110, 10);
+    g.fillStyle = '#ff6a5a';
+    g.fillRect(200, 130, 70, 8);
+    const tex = new THREE.CanvasTexture(c);
+    tex.mapping = THREE.EquirectangularReflectionMapping;
+    tex.colorSpace = THREE.SRGBColorSpace;
+    const pm = new THREE.PMREMGenerator(renderer);
+    const env = pm.fromEquirectangular(tex).texture;
+    pm.dispose();
+    tex.dispose();
+    return env;
+  }
+
+  function makeGunMaterials() {
+    const stipple = canvasTexture(64, (g, s) => {
+      g.fillStyle = '#808080';
+      g.fillRect(0, 0, s, s);
+      for (let i = 0; i < 700; i++) { g.fillStyle = Math.random() < 0.5 ? '#000' : '#fff'; g.fillRect(Math.random() * s, Math.random() * s, 2, 2); }
+    }, 5, 5);
+    const metal = (color, metalness, roughness, env) => new THREE.MeshStandardMaterial({ color, metalness, roughness, envMap: gunEnv, envMapIntensity: env });
+    const poly = (color) => new THREE.MeshStandardMaterial({ color, metalness: 0.15, roughness: 0.72, bumpMap: stipple, bumpScale: 0.7, envMap: gunEnv, envMapIntensity: 0.6 });
+    return {
+      steel: metal(0x8a95a3, 0.95, 0.27, 1.5),
+      blued: metal(0x2a3038, 0.9, 0.36, 1.4),
+      dark: metal(0x12151a, 0.6, 0.5, 1),
+      poly: poly(0x1c2027),
+      olive: poly(0x3e4c30),
+      glove: new THREE.MeshStandardMaterial({ color: 0x1a1d22, roughness: 0.9, bumpMap: stipple, bumpScale: 0.5 }),
+      sleeve: new THREE.MeshStandardMaterial({ color: 0x20293a, roughness: 0.9, bumpMap: stipple, bumpScale: 0.4 }),
+      dot: new THREE.MeshBasicMaterial({ color: new THREE.Color(0x59ff9c).multiplyScalar(2.5) }),
+      accent: new THREE.MeshBasicMaterial({ color: new THREE.Color(0x2fe8dc).multiplyScalar(2.2) }),
+      lens: new THREE.MeshStandardMaterial({ color: 0x0a1a2a, metalness: 0.3, roughness: 0.05, emissive: 0x0a3a4a, emissiveIntensity: 0.35, envMap: gunEnv, envMapIntensity: 2.2 })
+    };
+  }
+
   function buildViewmodel(key) {
     while (vm.children.length) vm.remove(vm.children[0]);
-    const w = WEAPONS[key];
-    const metal = new THREE.MeshStandardMaterial({ color: w.color, roughness: 0.35, metalness: 0.75 });
-    const glove = new THREE.MeshStandardMaterial({ color: 0x1b222c, roughness: 0.8 });
-    const sleeve = new THREE.MeshStandardMaterial({ color: 0x232d3b, roughness: 0.85 });
-    const accent = new THREE.MeshBasicMaterial({ color: new THREE.Color(0x2fe8dc).multiplyScalar(2.2) });
-    const part = (sx, sy, sz, x, y, z, mat = metal, parent = vm) => {
-      const m = new THREE.Mesh(geoBox, mat);
-      m.scale.set(sx, sy, sz);
-      m.position.set(x, y, z);
-      parent.add(m);
-      return m;
+    const m = gunMats;
+    const put = (parent, geo, mat, sx, sy, sz, x, y, z, rx = 0, ry = 0, rz = 0) => {
+      const o = new THREE.Mesh(geo, mat);
+      o.scale.set(sx, sy, sz);
+      o.position.set(x, y, z);
+      o.rotation.set(rx, ry, rz);
+      parent.add(o);
+      return o;
     };
-    const L = w.len;
-    const pistol = key === 'pistol';
-    part(0.07, pistol ? 0.05 : 0.09, L, 0, pistol ? -0.02 : 0, -L / 2);
-    part(0.032, 0.032, w.barrel, 0, 0.018, -(L + w.barrel / 2), mats.gunDark);
-    part(0.05, 0.14, 0.07, 0, -0.11, -0.04, mats.gunDark).rotation.x = 0.25;
-    part(0.073, 0.008, L * 0.5, 0, 0.02, -L * 0.45, accent);
-    part(0.03, 0.04, 0.06, 0, 0.065, -L * 0.3, mats.gunDark);
-    if (w.scope) part(0.045, 0.045, 0.2, 0, 0.09, -L * 0.45, mats.gunDark);
+    const bx = (p, mat, sx, sy, sz, x, y, z, rx, ry, rz) => put(p, geoBox, mat, sx, sy, sz, x, y, z, rx, ry, rz);
+    const cz = (p, mat, d, len, x, y, z) => put(p, geoCyl, mat, d, len, d, x, y, z, Math.PI / 2);
+    const cy = (p, mat, d, len, x, y, z) => put(p, geoCyl, mat, d, len, d, x, y, z);
+    const cx = (p, mat, d, len, x, y, z) => put(p, geoCyl, mat, d, len, d, x, y, z, 0, 0, Math.PI / 2);
+    const ball = (p, mat, d, x, y, z) => put(p, geoBall, mat, d, d, d, x, y, z);
 
-    // Magazine as its own group so it can drop and re-seat during a reload
-    const mag = new THREE.Group();
-    mag.position.set(0, pistol ? -0.1 : -0.1, pistol ? -0.05 : -L * 0.58);
-    part(0.045, pistol ? 0.14 : 0.17, 0.065, 0, -0.04, 0, mats.gunDark, mag).rotation.x = pistol ? 0.1 : key === 'sniper' ? 0 : 0.12;
-    part(0.047, 0.012, 0.067, 0, -0.12, 0, accent, mag);
-    vm.add(mag);
+    const rightHand = (gx, gy, gz) => {
+      const h = new THREE.Group();
+      h.position.set(gx, gy, gz);
+      bx(h, m.glove, 0.046, 0.075, 0.05, 0.014, 0, 0.034);
+      [0.034, 0.012, -0.01, -0.032].forEach(y => bx(h, m.glove, 0.054, 0.018, 0.02, 0, y, -0.036));
+      bx(h, m.glove, 0.016, 0.018, 0.07, -0.032, 0.036, -0.012);
+      bx(h, m.glove, 0.014, 0.014, 0.06, 0, 0.062, -0.058);
+      bx(h, m.sleeve, 0.058, 0.058, 0.32, 0.04, -0.07, 0.22, 0.6, 0.18, 0);
+      bx(h, m.dark, 0.064, 0.064, 0.022, 0.026, -0.04, 0.08, 0.6, 0.18, 0);
+      vm.add(h);
+      return h;
+    };
+    const leftHand = (x, y, z, ry = 0) => {
+      const h = new THREE.Group();
+      bx(h, m.glove, 0.085, 0.032, 0.09, 0, 0, 0);
+      [-0.03, -0.01, 0.01, 0.03].forEach(zz => bx(h, m.glove, 0.02, 0.05, 0.017, -0.048, 0.022, zz));
+      bx(h, m.glove, 0.018, 0.04, 0.02, 0.046, 0.016, -0.02, 0, 0, -0.2);
+      bx(h, m.sleeve, 0.06, 0.06, 0.34, -0.05, -0.08, 0.26, 0.55, -0.3, 0);
+      bx(h, m.dark, 0.066, 0.066, 0.022, -0.025, -0.045, 0.1, 0.55, -0.3, 0);
+      h.position.set(x, y, z);
+      h.rotation.y = ry;
+      vm.add(h);
+      return h;
+    };
+    const mkGroup = (x, y, z) => { const g = new THREE.Group(); g.position.set(x, y, z); vm.add(g); return g; };
+    const sightDots = (p, x, y, z) => bx(p, m.dot, 0.004, 0.004, 0.002, x, y, z);
 
-    // Slide or bolt that cycles with each shot
-    let slide;
-    if (pistol) {
-      slide = part(0.075, 0.045, L * 0.95, 0, 0.055, -L / 2, metal);
+    let mag, slide, handR, handL, lBase, tip, adsY, adsZ, grip;
+
+    if (key === 'pistol') {
+      bx(vm, m.poly, 0.034, 0.03, 0.17, 0, -0.028, -0.085);
+      bx(vm, m.poly, 0.032, 0.014, 0.075, 0, -0.04, -0.16);
+      bx(vm, m.poly, 0.036, 0.11, 0.056, 0, -0.095, -0.02, -0.2);
+      bx(vm, m.poly, 0.034, 0.03, 0.03, 0, -0.045, 0.016);
+      bx(vm, m.poly, 0.03, 0.006, 0.058, 0, -0.056, -0.078);
+      bx(vm, m.poly, 0.03, 0.03, 0.006, 0, -0.042, -0.106);
+      bx(vm, m.dark, 0.008, 0.022, 0.01, 0, -0.04, -0.07, 0.3);
+      bx(vm, m.accent, 0.036, 0.004, 0.05, 0, -0.012, -0.14);
+      slide = mkGroup(0, 0.012, -0.115);
+      bx(slide, m.steel, 0.032, 0.038, 0.23, 0, 0, 0);
+      bx(slide, m.blued, 0.03, 0.01, 0.23, 0, 0.022, 0);
+      for (let i = 0; i < 6; i++) bx(slide, m.dark, 0.036, 0.03, 0.003, 0, 0, 0.1 - i * 0.009);
+      bx(slide, m.dark, 0.034, 0.014, 0.05, 0, 0.004, -0.02);
+      bx(slide, m.dark, 0.006, 0.011, 0.012, 0, 0.031, -0.098);
+      bx(slide, m.dark, 0.022, 0.011, 0.012, 0, 0.031, 0.1);
+      sightDots(slide, 0, 0.0375, -0.1045);
+      sightDots(slide, -0.007, 0.0375, 0.1065);
+      sightDots(slide, 0.007, 0.0375, 0.1065);
+      cz(slide, m.dark, 0.017, 0.016, 0, 0.004, -0.121);
+      mag = mkGroup(0, -0.118, -0.018);
+      bx(mag, m.dark, 0.026, 0.09, 0.042, 0, 0, 0, -0.2);
+      bx(mag, m.poly, 0.036, 0.012, 0.054, 0, -0.054, 0.012, -0.2);
+      grip = [0, -0.092, -0.022];
+      lBase = new THREE.Vector3(0, -0.125, -0.025);
+      handL = leftHand(lBase.x, lBase.y, lBase.z);
+      tip = 0.245; adsY = -0.043; adsZ = -0.27;
+    } else if (key === 'smg') {
+      bx(vm, m.blued, 0.05, 0.058, 0.28, 0, 0, -0.14);
+      bx(vm, m.steel, 0.03, 0.012, 0.22, 0, 0.034, -0.15);
+      bx(vm, m.dark, 0.022, 0.02, 0.024, 0, 0.05, -0.05);
+      bx(vm, m.dark, 0.006, 0.012, 0.012, 0, 0.0, -0.05);
+      bx(vm, m.poly, 0.056, 0.062, 0.13, 0, -0.004, -0.345);
+      for (let i = 0; i < 4; i++) bx(vm, m.dark, 0.06, 0.02, 0.008, 0, 0.0, -0.3 - i * 0.03);
+      bx(vm, m.steel, 0.03, 0.026, 0.01, 0, 0.0, -0.412);
+      cz(vm, m.steel, 0.021, 0.05, 0, 0, -0.437);
+      cz(vm, m.dark, 0.027, 0.032, 0, 0, -0.472);
+      cy(vm, m.dark, 0.022, 0.03, 0, 0.032, -0.425);
+      bx(vm, m.dark, 0.004, 0.02, 0.004, 0, 0.043, -0.425);
+      sightDots(vm, 0, 0.054, -0.425);
+      bx(vm, m.poly, 0.04, 0.12, 0.058, 0, -0.095, -0.035, -0.28);
+      bx(vm, m.blued, 0.044, 0.03, 0.12, 0, -0.04, -0.1);
+      bx(vm, m.dark, 0.03, 0.006, 0.06, 0, -0.058, -0.095);
+      bx(vm, m.dark, 0.008, 0.022, 0.01, 0, -0.045, -0.088, 0.3);
+      bx(vm, m.accent, 0.052, 0.004, 0.1, 0, 0.0, -0.1);
+      [-0.022, 0.022].forEach(x => cz(vm, m.steel, 0.009, 0.1, x, 0.004, 0.05));
+      bx(vm, m.dark, 0.05, 0.012, 0.012, 0, 0.004, 0.1);
+      bx(vm, m.poly, 0.042, 0.095, 0.018, 0, -0.01, 0.112);
+      slide = mkGroup(0.036, 0.016, -0.22);
+      bx(slide, m.dark, 0.016, 0.016, 0.034, 0, 0, 0);
+      bx(slide, m.steel, 0.01, 0.01, 0.07, 0, 0, -0.04);
+      mag = mkGroup(0, -0.098, -0.17);
+      bx(mag, m.dark, 0.034, 0.1, 0.052, 0, 0, 0, -0.05);
+      bx(mag, m.dark, 0.034, 0.075, 0.052, 0, -0.082, -0.018, 0.22);
+      bx(mag, m.poly, 0.04, 0.01, 0.056, 0, -0.123, -0.03, 0.22);
+      grip = [0, -0.1, -0.04];
+      lBase = new THREE.Vector3(0, -0.048, -0.345);
+      handL = leftHand(lBase.x, lBase.y, lBase.z);
+      tip = 0.49; adsY = -0.056; adsZ = -0.3;
+    } else if (key === 'rifle') {
+      bx(vm, m.blued, 0.05, 0.05, 0.28, 0, 0, -0.16);
+      bx(vm, m.poly, 0.05, 0.045, 0.2, 0, -0.048, -0.11);
+      bx(vm, m.steel, 0.022, 0.012, 0.42, 0, 0.03, -0.2);
+      for (let i = 0; i < 11; i++) bx(vm, m.dark, 0.026, 0.008, 0.008, 0, 0.036, -0.02 - i * 0.035);
+      bx(vm, m.dark, 0.022, 0.024, 0.014, 0, 0.05, -0.04);
+      bx(vm, m.dark, 0.004, 0.012, 0.004, 0, 0.066, -0.04);
+      bx(vm, m.dark, 0.012, 0.045, 0.014, 0, 0.056, -0.51);
+      sightDots(vm, 0, 0.081, -0.51);
+      bx(vm, m.poly, 0.058, 0.058, 0.24, 0, 0, -0.42);
+      for (let i = 0; i < 6; i++) bx(vm, m.dark, 0.062, 0.02, 0.012, 0, 0, -0.325 - i * 0.034);
+      bx(vm, m.dark, 0.03, 0.03, 0.03, 0, 0.0, -0.555);
+      cz(vm, m.steel, 0.022, 0.1, 0, 0, -0.6);
+      cz(vm, m.dark, 0.03, 0.05, 0, 0, -0.67);
+      bx(vm, m.steel, 0.032, 0.006, 0.008, 0, 0.0, -0.67);
+      bx(vm, m.poly, 0.042, 0.12, 0.06, 0, -0.12, -0.015, -0.3);
+      bx(vm, m.poly, 0.034, 0.006, 0.07, 0, -0.074, -0.07);
+      bx(vm, m.dark, 0.008, 0.022, 0.01, 0, -0.058, -0.075, 0.3);
+      bx(vm, m.accent, 0.052, 0.004, 0.14, 0, 0.0, -0.1);
+      cz(vm, m.poly, 0.034, 0.1, 0, -0.012, 0.05);
+      bx(vm, m.poly, 0.044, 0.075, 0.08, 0, -0.03, 0.09);
+      bx(vm, m.dark, 0.046, 0.06, 0.015, 0, -0.03, 0.135);
+      slide = mkGroup(0, 0.036, -0.02);
+      bx(slide, m.dark, 0.03, 0.012, 0.04, 0, 0, 0);
+      bx(slide, m.dark, 0.02, 0.02, 0.02, 0, 0.0, 0.02);
+      mag = mkGroup(0, -0.11, -0.14);
+      bx(mag, m.dark, 0.034, 0.13, 0.055, 0, 0, 0, 0.1);
+      bx(mag, m.poly, 0.038, 0.01, 0.06, 0, -0.07, 0.01, 0.1);
+      grip = [0, -0.12, -0.02];
+      lBase = new THREE.Vector3(0, -0.047, -0.42);
+      handL = leftHand(lBase.x, lBase.y, lBase.z);
+      tip = 0.695; adsY = -0.054; adsZ = -0.3;
     } else {
-      slide = new THREE.Group();
-      slide.position.set(0.05, 0.045, -L * 0.34);
-      part(0.022, 0.03, 0.075, 0, 0, 0, mats.gunDark, slide);
-      if (key === 'sniper') {
-        const rod = part(0.07, 0.014, 0.014, 0.035, 0, 0, mats.gunDark, slide);
-        const knob = new THREE.Mesh(new THREE.SphereGeometry(0.02, 8, 8), mats.gunDark);
-        knob.position.set(0.075, 0, 0);
-        slide.add(knob);
-        void rod;
-      }
-      vm.add(slide);
+      bx(vm, m.blued, 0.05, 0.06, 0.26, 0, 0, -0.14);
+      bx(vm, m.olive, 0.052, 0.1, 0.22, 0, -0.03, 0.09);
+      bx(vm, m.olive, 0.05, 0.04, 0.14, 0, 0.034, 0.12);
+      bx(vm, m.dark, 0.054, 0.11, 0.02, 0, -0.035, 0.2);
+      bx(vm, m.olive, 0.05, 0.07, 0.34, 0, -0.025, -0.47);
+      bx(vm, m.olive, 0.042, 0.12, 0.06, 0, -0.1, -0.04, -0.3);
+      bx(vm, m.dark, 0.034, 0.006, 0.07, 0, -0.07, -0.09);
+      bx(vm, m.dark, 0.008, 0.022, 0.01, 0, -0.055, -0.1, 0.3);
+      cz(vm, m.steel, 0.028, 0.18, 0, 0, -0.73);
+      cz(vm, m.dark, 0.038, 0.07, 0, 0, -0.85);
+      for (let i = 0; i < 3; i++) bx(vm, m.steel, 0.04, 0.004, 0.008, 0, 0.0, -0.83 - i * 0.02);
+      [-0.02, 0.02].forEach(x => cz(vm, m.dark, 0.009, 0.14, x, -0.07, -0.6));
+      bx(vm, m.dark, 0.02, 0.03, 0.03, 0, 0.045, -0.06);
+      bx(vm, m.dark, 0.02, 0.03, 0.03, 0, 0.045, -0.24);
+      cz(vm, m.dark, 0.034, 0.26, 0, 0.078, -0.15);
+      cz(vm, m.dark, 0.052, 0.07, 0, 0.078, -0.31);
+      cz(vm, m.dark, 0.044, 0.05, 0, 0.078, 0.0);
+      cz(vm, m.lens, 0.046, 0.004, 0, 0.078, -0.347);
+      cz(vm, m.lens, 0.036, 0.004, 0, 0.078, 0.027);
+      cy(vm, m.steel, 0.016, 0.02, 0, 0.1, -0.15);
+      cx(vm, m.steel, 0.016, 0.02, 0.025, 0.078, -0.15);
+      bx(vm, m.accent, 0.052, 0.004, 0.16, 0, 0.0, -0.1);
+      slide = mkGroup(0.025, 0.02, -0.1);
+      bx(slide, m.dark, 0.024, 0.022, 0.07, 0, 0, 0);
+      bx(slide, m.dark, 0.07, 0.012, 0.012, 0.04, 0, 0.02);
+      ball(slide, m.dark, 0.04, 0.08, 0, 0.02);
+      mag = mkGroup(0, -0.065, -0.15);
+      bx(mag, m.dark, 0.034, 0.06, 0.07, 0, 0, 0);
+      bx(mag, m.olive, 0.038, 0.01, 0.074, 0, -0.035, 0);
+      grip = [0, -0.1, -0.04];
+      lBase = new THREE.Vector3(0, -0.078, -0.48);
+      handL = leftHand(lBase.x, lBase.y, lBase.z);
+      tip = 0.92; adsY = -0.075; adsZ = -0.3;
     }
 
-    // Hands and forearms
-    const handR = new THREE.Group();
-    part(0.07, 0.08, 0.1, 0, -0.14, 0, glove, handR);
-    part(0.085, 0.085, 0.34, 0.01, -0.17, 0.2, sleeve, handR).rotation.set(0.15, 0.12, 0);
-    handR.position.set(0, 0, -0.03);
-    vm.add(handR);
-    const handL = new THREE.Group();
-    part(0.075, 0.07, 0.12, 0, 0, 0, glove, handL);
-    part(0.085, 0.085, 0.36, -0.02, -0.04, 0.24, sleeve, handL).rotation.set(0.35, -0.3, 0);
-    const lBase = new THREE.Vector3(-0.005, -0.075, -L * 0.72);
-    handL.position.copy(lBase);
-    vm.add(handL);
-
-    flashSprite.position.set(0, 0.018, -(L + w.barrel + 0.03));
+    handR = rightHand(grip[0], grip[1], grip[2]);
+    flashSprite.position.set(0, 0.003, -(tip + 0.03));
     vm.add(flashSprite);
     vm.userData = {
-      base: new THREE.Vector3(0.2, -0.2, -0.38),
-      mag, slide, handL, handR, lBase,
+      base: key === 'pistol' ? new THREE.Vector3(0.15, -0.165, -0.46) : new THREE.Vector3(0.17, -0.19, -0.4),
+      mag, slide, handL, handR, lBase, adsY, adsZ,
       magBase: mag.position.clone(),
       slideBase: slide.position.clone(),
-      pistol, sniper: key === 'sniper'
+      pistol: key === 'pistol', sniper: key === 'sniper'
     };
     vm.position.copy(vm.userData.base);
     vm.rotation.set(0, 0, 0);
@@ -583,6 +753,8 @@ export function initGame() {
     if (hazards) hazards.dispose();
     if (bloom) bloom.dispose();
     if (scene) disposeScene(scene);
+    if (gunEnv) { gunEnv.dispose(); gunEnv = null; }
+    gunMats = null;
     renderer.dispose();
     renderer = scene = camera = bloom = null;
   }
@@ -1596,8 +1768,8 @@ export function initGame() {
     const base = ud.base;
     const bobK = 1 - S.ads * 0.85;
     let tx = base.x + (0 - base.x) * S.ads;
-    let ty = base.y + (-0.118 - base.y) * S.ads;
-    let tz = base.z + (-0.3 - base.z) * S.ads;
+    let ty = base.y + (ud.adsY - base.y) * S.ads;
+    let tz = base.z + (ud.adsZ - base.z) * S.ads;
     let rx = 0, ry = 0, rz = 0;
     if (moving) {
       tx += Math.cos(S.bob * 0.5) * 0.012 * bobK * (sprinting ? 2.4 : 1);
