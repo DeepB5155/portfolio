@@ -10,24 +10,38 @@ import { initGithubProjects } from './github-projects.js';
 import { initUniverse } from './universe.js';
 import { initGame } from './fps-game.js';
 
+// One broken feature (for example 3D on a device without WebGL) must never stop the rest of the site from starting
+function safe(name, fn) {
+  try {
+    const result = fn();
+    if (result && typeof result.catch === 'function') result.catch(err => console.warn(`${name} failed`, err));
+  } catch (err) {
+    console.warn(`${name} failed`, err);
+  }
+}
+
 async function boot() {
-  initTheme();
-  initNav();
-  initCursor();
-  
+  safe('theme', initTheme);
+  safe('nav', initNav);
+  safe('cursor', initCursor);
+
   if (typeof gsap !== 'undefined') {
     gsap.set('.hero-anim', { opacity: 0, y: 30 });
   }
 
-  await initLoader();
-  initThreeHero();
-  initAnimations();
-  initModals();
-  initContactForm();
-  initGithubProjects();
-  initUniverse();
-  initGame();
-  positionOrbitItems();
+  try { await initLoader(); } catch (err) { console.warn('loader failed', err); }
+  safe('hero 3D', initThreeHero);
+  safe('animations', initAnimations);
+  safe('modals', initModals);
+  safe('contact form', initContactForm);
+  safe('github projects', initGithubProjects);
+  safe('project universe', initUniverse);
+  safe('game', initGame);
+  safe('orbit', positionOrbitItems);
+
+  // If the entrance animation cannot run (no GSAP, no ScrollTrigger or reduced motion), make sure the hero content is still visible
+  const noHeroAnim = typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (noHeroAnim) document.querySelectorAll('.hero-anim').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
 }
 
 function positionOrbitItems() {

@@ -121,6 +121,26 @@ export function initGame() {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
+  // The 3D library comes from a CDN. If it did not load, keep the game buttons working and explain why.
+  if (typeof THREE === 'undefined') {
+    const closeFallback = () => { overlay.hidden = true; document.body.style.overflow = ''; };
+    document.querySelectorAll('[data-open-game]').forEach(btn => btn.addEventListener('click', () => {
+      overlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      overlay.querySelectorAll('.game-screen').forEach(el => { el.hidden = el !== startScreen; });
+      ['game-tutorial-btn', 'game-start-btn', 'game-help-btn'].forEach(id => { $(id).hidden = true; });
+      $('game-best').textContent = '';
+      const err = $('game-error');
+      err.textContent = 'The 3D engine could not be loaded. Please check your internet connection and reload the page. The rest of the site works fine.';
+      err.hidden = false;
+      $('game-back-start').focus({ preventScroll: true });
+    }));
+    $('game-back-start').addEventListener('click', closeFallback);
+    $('game-close').addEventListener('click', closeFallback);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !overlay.hidden) closeFallback(); });
+    return;
+  }
+
   let isOpen = false;
   let lastFocus = null;
   let rafId = 0;
@@ -2077,23 +2097,46 @@ export function initGame() {
   }
 
   // ---------- open / close ----------
+  // Friendly message instead of a broken game when 3D is not available
+  const SETUP_IDS = ['game-tutorial-btn', 'game-start-btn', 'game-help-btn'];
+  function showUnsupported(message) {
+    cancelAnimationFrame(rafId);
+    rafId = 0;
+    if (document.pointerLockElement) document.exitPointerLock();
+    S.phase = 'idle';
+    S.firing = false;
+    overlay.hidden = false;
+    [hud, buyPanel, endScreen, pauseScreen, helpScreen, touchUi, crosshair, scopeEl].forEach(el => { el.hidden = true; });
+    hideCoach();
+    startScreen.hidden = false;
+    SETUP_IDS.forEach(id => { $(id).hidden = true; });
+    $('game-best').textContent = '';
+    const err = $('game-error');
+    err.textContent = message;
+    err.hidden = false;
+    $('game-back-start').focus({ preventScroll: true });
+  }
+
   function open() {
     if (isOpen) return;
     lastFocus = document.activeElement;
+    $('game-error').hidden = true;
+    SETUP_IDS.forEach(id => { $(id).hidden = false; });
     try {
-      if (typeof THREE === 'undefined') throw new Error('three missing');
+      if (typeof THREE === 'undefined') throw new Error('three-missing');
       build();
     } catch (err) {
       console.warn('Core Defense: 3D init failed', err);
-      renderer = null;
-      overlay.hidden = false;
+      try { if (renderer) renderer.dispose(); } catch { /* ignore */ }
+      renderer = scene = camera = bloom = null;
       isOpen = true;
-      startBtn.hidden = true;
-      $('game-best').textContent = 'This device cannot run 3D graphics, but the rest of the site works fine.';
+      document.body.style.overflow = 'hidden';
+      showUnsupported(err && err.message === 'three-missing'
+        ? 'The 3D engine could not be loaded. Please check your internet connection and reload the page. The rest of the site works fine.'
+        : 'This device or browser cannot run 3D graphics (WebGL), so the game is unavailable here. The rest of the site works fine. Try an up-to-date Chrome, Edge, Firefox or Safari.');
       return;
     }
     isOpen = true;
-    startBtn.hidden = false;
     overlay.hidden = false;
     document.body.style.overflow = 'hidden';
     window.dispatchEvent(new CustomEvent('game-state', { detail: true }));
@@ -2168,6 +2211,11 @@ export function initGame() {
   $('buy-go').addEventListener('click', startRound);
   buyPanel.querySelectorAll('.buy-item').forEach(btn => btn.addEventListener('click', () => buyItem(btn.dataset.buy)));
   window.addEventListener('resize', resize);
+  canvas.addEventListener('webglcontextlost', (e) => {
+    e.preventDefault();
+    if (!isOpen) return;
+    showUnsupported('The graphics were interrupted by your browser or device (it ran out of graphics memory). Close the game and open it again. The rest of the site works fine.');
+  });
   overlay.addEventListener('contextmenu', (e) => e.preventDefault());
 
   const syncAudioButtons = () => {
