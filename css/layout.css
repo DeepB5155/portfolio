@@ -21,7 +21,7 @@ section {
 }
 
 .section-inner {
-  padding: var(--section-pad) 0;
+  padding-block: var(--section-pad);
 }
 
 /* ---- LOADER ---- */

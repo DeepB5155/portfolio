@@ -9,6 +9,7 @@ import { initContactForm } from './contact.js';
 import { initGithubProjects } from './github-projects.js';
 import { initUniverse } from './universe.js';
 import { initGame } from './fps-game.js';
+import { initSiteAudit } from './site-audit.js';
 
 // One broken feature (for example 3D on a device without WebGL) must never stop the rest of the site from starting
 function safe(name, fn) {
@@ -37,6 +38,7 @@ async function boot() {
   safe('github projects', initGithubProjects);
   safe('project universe', initUniverse);
   safe('game', initGame);
+  safe('site audit', initSiteAudit);
   safe('orbit', positionOrbitItems);
 
   // If the entrance animation cannot run (no GSAP, no ScrollTrigger or reduced motion), make sure the hero content is still visible
